@@ -1,0 +1,191 @@
+[
+ {
+  "id": "i1",
+  "lane": "interview",
+  "ig_handle": "interview.chai",
+  "slot": "2026-11-23 12:30",
+  "file": "videos/i1_valueref.mp4",
+  "ig": "Change B... does A change? 🤔\nA struct copy is a photocopy. A class copy is a second key to the same house.\nWhat do a.X and c.X print? Comment your guess 👇\nFollow @interview.chai for C# and SQL explained simply ☕\nAI-made explainer.\n\n#csharp #dotnet #interviewprep #programming",
+  "comment": "Which one do you use more in your project, struct or class? 👇"
+ },
+ {
+  "id": "k1",
+  "lane": "kahani",
+  "ig_handle": "kahaniyon.wali.raat",
+  "slot": "2026-11-23 19:00",
+  "file": "videos/k1_kauve.mp4",
+  "ig": "Agra mein kitne kauve hain? 🐦\nAkbar ne Birbal se poochha, aur Birbal ne turant sankhya bata di. Agar zyada nikle? Agar kam nikle?\nPoori kahani 👇 Aap hote to kya karte? Comment karo.\nLok-katha ka ek prachalit roop. Animation aur awaaz AI se bani hai.\n\n#AkbarBirbal #BirbalKiChaturai #HindiKahani #LokKatha",
+  "comment": "Birbal ka jawab aapko kaisa laga? Neeche likho 👇 Follow karo @kahaniyon.wali.raat 🌙"
+ },
+ {
+  "id": "g1",
+  "lane": "gta",
+  "ig_handle": "bawaalmoments",
+  "slot": "2026-11-23 21:00",
+  "file": "videos/g1_platform.mp4",
+  "ig": "GTA VI kis platform par aaya? 🎮\nRockstar ki official page par likha hai: Out Now, PlayStation 5 aur Xbox Series X|S. PC ka zikr us page par nahi hai.\nFan-made explainer. Rockstar Games se koi sambandh nahi. Animation aur awaaz AI se bani hai.\n\n#gta6 #gtavi #gaminghindi",
+  "comment": "Aap kis par khelenge? Neeche likho 👇"
+ },
+ {
+  "id": "i2",
+  "lane": "interview",
+  "ig_handle": "interview.chai",
+  "slot": "2026-11-24 12:30",
+  "file": "videos/i2_stringbuilder.mp4",
+  "ig": "s += \" world\": does t change? 🪧\nA string is a printed name board: add a word and a new board is printed. A StringBuilder is a whiteboard.\nWhat do t and sb2 show? Comment 👇\nFollow @interview.chai for C# and SQL explained simply ☕\nAI-made explainer.\n\n#csharp #dotnet #strings #interviewprep",
+  "comment": "One line: why is a loop of s += x slow? 👇"
+ },
+ {
+  "id": "k2",
+  "lane": "kahani",
+  "ig_handle": "kahaniyon.wali.raat",
+  "slot": "2026-11-24 19:00",
+  "file": "videos/k2_tenali.mp4",
+  "ig": "Billi ne doodh peena chhod diya! 🐈\nTenali Rama ki ek chaal. Raja ne billi aur doodh diya, par Tenali ki billi doodh se darne lagi.\nPoori kahani 👇 Aap hote to kya karte? Comment karo.\nLok-katha, kai versions maujood hain. Animation aur awaaz AI se bani hai.\n\n#TenaliRama #HindiKahani #LokKatha #MoralStories",
+  "comment": "Aapke hisaab se Tenali ne sahi kiya? Neeche likho 👇 Follow karo @kahaniyon.wali.raat 🌙"
+ },
+ {
+  "id": "g2",
+  "lane": "gta",
+  "ig_handle": "bawaalmoments",
+  "slot": "2026-11-24 21:00",
+  "file": "videos/g2_story.mp4",
+  "ig": "Jason aur Lucia: kahani kya hai? 🌴\nRockstar ki official kahani ka saar: ek aasaan score galat ho jaata hai aur dono ko ek-doosre par bharosa karna padta hai.\nFan-made explainer. Rockstar Games se koi sambandh nahi. Animation aur awaaz AI se bani hai.\n\n#gta6 #gtavi #gaminghindi",
+  "comment": "Aapko kahani kaisi lagi? Neeche likho 👇"
+ },
+ {
+  "id": "i3",
+  "lane": "interview",
+  "ig_handle": "interview.chai",
+  "slot": "2026-11-25 12:30",
+  "file": "videos/i3_abstract_iface.mp4",
+  "ig": "Abstract class or interface? 🏠\nAn abstract class is a half-built house: walls and some rooms ready. An interface is only a contract.\nWhich do you pick first? Comment 👇\nFollow @interview.chai for C# and SQL explained simply ☕\nAI-made explainer.\n\n#csharp #oop #dotnet #interviewprep",
+  "comment": "Name one real case where you chose an interface over an abstract class 👇"
+ },
+ {
+  "id": "k3",
+  "lane": "kahani",
+  "ig_handle": "kahaniyon.wali.raat",
+  "slot": "2026-11-25 19:00",
+  "file": "videos/k3_yaksha.mp4",
+  "ig": "Yaksha ne poochha: sabse bada ashcharya kya hai? 💧\nPyaase Pandav sarovar par, ek Yaksha ke sawal, aur Yudhishthir ka jawab.\nPoori kahani 👇 Aap hote to kya karte? Comment karo.\nMahabharat ka ek prachalit prasang (Vana Parva, kai versions maujood hain). Animation aur awaaz AI se bani hai.\n\n#Mahabharat #YakshaPrashna #Yudhishthir #HindiKahani",
+  "comment": "Aap isse kitna sehmat ho? Neeche likho 👇 Follow karo @kahaniyon.wali.raat 🌙"
+ },
+ {
+  "id": "g3",
+  "lane": "gta",
+  "ig_handle": "bawaalmoments",
+  "slot": "2026-11-25 21:00",
+  "file": "videos/g3_leonida.mp4",
+  "ig": "Leonida kaun si jagah hai? 🗺️\nOfficial page par likha hai: Vice City, USA aur 'Welcome to Leonida'. Leonida asli jagah hai ya nahi, ye us page par nahi likha.\nFan-made explainer. Rockstar Games se koi sambandh nahi. Animation aur awaaz AI se bani hai.\n\n#gta6 #gtavi #gaminghindi",
+  "comment": "Aapko kaunsi jagah dekhni hai? Neeche likho 👇"
+ },
+ {
+  "id": "i4",
+  "lane": "interview",
+  "ig_handle": "interview.chai",
+  "slot": "2026-11-26 12:30",
+  "file": "videos/i4_increment.mp4",
+  "ig": "What does this print? 🤔\nint i = 0; int r = i++ + ++i;\nWhat is r? Comment your answer before you watch the end 👇\nFollow @interview.chai for C# and SQL explained simply ☕\nAI-made explainer.\n\n#csharp #quiz #dotnet #interviewprep",
+  "comment": "What did you answer before watching? 👇"
+ },
+ {
+  "id": "k4",
+  "lane": "kahani",
+  "ig_handle": "kahaniyon.wali.raat",
+  "slot": "2026-11-26 19:00",
+  "file": "videos/k4_bharat.mp4",
+  "ig": "Bharat ne rajgaddi kyun nahi li? 🪔\nRam vanvaas mein the. Bharat ne unki padukaen singhasan par rakh di aur khud sevak ki tarah raj chalaya.\nPoori kahani 👇 Aap hote to kya karte? Comment karo.\nRamayan ka ek prachalit prasang (Ayodhya Kand, kai versions maujood hain). Animation aur awaaz AI se bani hai.\n\n#Ramayan #Bharat #HindiKahani #BhaktiKatha",
+  "comment": "Aapko is kahani ki kaun si baat sabse achchhi lagi? 👇 Follow karo @kahaniyon.wali.raat 🌙"
+ },
+ {
+  "id": "g4",
+  "lane": "gta",
+  "ig_handle": "bawaalmoments",
+  "slot": "2026-11-26 21:00",
+  "file": "videos/g4_editions.mp4",
+  "ig": "Ultimate Edition mein kya hai? 🧰\nOfficial page par do cheezein: Ultimate Edition aur Vintage Vice City Pack. Daam us page par nahi dikha, isliye nahi bata rahe.\nFan-made explainer. Rockstar Games se koi sambandh nahi. Animation aur awaaz AI se bani hai.\n\n#gta6 #gtavi #gaminghindi",
+  "comment": "Aap kaun si edition lenge? Neeche likho 👇"
+ },
+ {
+  "id": "i5",
+  "lane": "interview",
+  "ig_handle": "interview.chai",
+  "slot": "2026-11-27 12:30",
+  "file": "videos/i5_joins.mp4",
+  "ig": "Where did Karan go? 🪑\nINNER JOIN keeps only guests with a seat. LEFT JOIN keeps every guest, and an empty seat shows NULL.\nWhich join do you use more? Comment 👇\nFollow @interview.chai for C# and SQL explained simply ☕\nAI-made explainer.\n\n#sql #database #interviewprep #sqlserver",
+  "comment": "Write a query that finds employees with NO department 👇"
+ },
+ {
+  "id": "k5",
+  "lane": "kahani",
+  "ig_handle": "kahaniyon.wali.raat",
+  "slot": "2026-11-27 19:00",
+  "file": "videos/k5_jatayu.mp4",
+  "ig": "Buddhe panchhi ne Raavan ko kyun roka? 🦅\nJatayu buddhe the, phir bhi Sita ki pukaar sunkar Raavan se lad gaye.\nPoori kahani 👇 Aap hote to kya karte? Comment karo.\nRamayan ka ek prachalit prasang (Aranyak Kand, kai versions maujood hain). Animation aur awaaz AI se bani hai.\n\n#Ramayan #Jatayu #HindiKahani #BhaktiKatha",
+  "comment": "Aapko kaunsa pal sabse zyada chhua? 👇 Follow karo @kahaniyon.wali.raat 🌙"
+ },
+ {
+  "id": "g5",
+  "lane": "gta",
+  "ig_handle": "bawaalmoments",
+  "slot": "2026-11-27 21:00",
+  "file": "videos/g5_warning.mp4",
+  "ig": "GTA VI bachchon ke liye nahi hai 🔞\nOfficial page par content warning likhi hai: Blood and Gore, Intense Violence, Mature Humor, Nudity, Strong Language, Strong Sexual Content, Use of Drugs and Alcohol.\nFan-made explainer. Rockstar Games se koi sambandh nahi. Animation aur awaaz AI se bani hai.\n\n#gta6 #gtavi #gaminghindi",
+  "comment": "Aap kya sochte ho? Neeche likho 👇"
+ },
+ {
+  "id": "i6",
+  "lane": "interview",
+  "ig_handle": "interview.chai",
+  "slot": "2026-11-28 12:30",
+  "file": "videos/i6_having.mp4",
+  "ig": "WHERE or HAVING? 🏫\nWHERE checks each student at the gate. HAVING checks each class after counting.\nTry COUNT(*) inside WHERE and the database says no. Comment 👇\nFollow @interview.chai for C# and SQL explained simply ☕\nAI-made explainer.\n\n#sql #database #interviewprep #sqlserver",
+  "comment": "Which one runs first, WHERE or GROUP BY? 👇"
+ },
+ {
+  "id": "k6",
+  "lane": "kahani",
+  "ig_handle": "kahaniyon.wali.raat",
+  "slot": "2026-11-28 19:00",
+  "file": "videos/k6_sher_khargosh.mp4",
+  "ig": "Khargosh ne sher ko kuan mein kyun giraya? 🐇\nPanchatantra ki ek chaal: chhote ki buddhi bade par bhaari.\nPoori kahani 👇 Aap hote to kya karte? Comment karo.\nPanchatantra ki ek prachalit kahani. Animation aur awaaz AI se bani hai.\n\n#Panchatantra #HindiKahani #MoralStories #LokKatha",
+  "comment": "Aapko kya lagta hai? Neeche likho 👇 Follow karo @kahaniyon.wali.raat 🌙"
+ },
+ {
+  "id": "i7",
+  "lane": "interview",
+  "ig_handle": "interview.chai",
+  "slot": "2026-11-29 12:00",
+  "file": "videos/i7_boxing.mp4",
+  "ig": "(long)o: what happens? 📦\nobject o = 5; long l = (long)o;\nDoes it print 5? Comment your answer 👇\nFollow @interview.chai for C# and SQL explained simply ☕\nAI-made explainer.\n\n#csharp #quiz #dotnet #interviewprep",
+  "comment": "Did you guess InvalidCastException? 👇"
+ },
+ {
+  "id": "i8",
+  "lane": "interview",
+  "ig_handle": "interview.chai",
+  "slot": "2026-11-29 15:00",
+  "file": "videos/i8_secondhigh.mp4",
+  "ig": "2nd highest salary in ONE query 🏁\nFind the max, then the max below it.\nCan you write it without looking? Comment your query 👇\nFollow @interview.chai for C# and SQL explained simply ☕\nAI-made explainer.\n\n#sql #database #interviewprep #sqlserver",
+  "comment": "How would you find the 3rd highest? 👇"
+ },
+ {
+  "id": "k7",
+  "lane": "kahani",
+  "ig_handle": "kahaniyon.wali.raat",
+  "slot": "2026-11-29 19:00",
+  "file": "videos/k7_kauwa_saanp.mp4",
+  "ig": "Kauwe ne saanp ko kaise haraya? 🐍\nKamzor kauwa, taakatwar saanp. Kauwe ne tareeka dhoondha.\nPoori kahani 👇 Aap hote to kya karte? Comment karo.\nPanchatantra ki ek prachalit kahani. Animation aur awaaz AI se bani hai.\n\n#Panchatantra #HindiKahani #MoralStories #LokKatha",
+  "comment": "Aap hote to kya karte? Neeche likho 👇 Follow karo @kahaniyon.wali.raat 🌙"
+ },
+ {
+  "id": "k8",
+  "lane": "kahani",
+  "ig_handle": "kahaniyon.wali.raat",
+  "slot": "2026-11-29 21:00",
+  "file": "videos/k8_sudama.mp4",
+  "ig": "Sudama sharm se kyun gaye? 🌾\nDost ke liye sirf chawal the. Par Krishna ne unhe gale lagaya.\nPoori kahani 👇 Aap hote to kya karte? Comment karo.\nBhagwat Purana ka ek prachalit prasang (kai versions maujood hain). Animation aur awaaz AI se bani hai.\n\n#Krishna #Sudama #HindiKahani #BhaktiKatha",
+  "comment": "Aapko Sudama ki kaun si baat achchhi lagi? 👇 Follow karo @kahaniyon.wali.raat 🌙"
+ }
+]

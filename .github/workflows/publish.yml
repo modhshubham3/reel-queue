@@ -1,0 +1,41 @@
+name: publish-reels
+on:
+  schedule:
+    - cron: "*/30 * * * *"     # every 30 minutes (GitHub may delay by a few minutes)
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Test: publish only this id (e.g. i2). Leave empty for normal run."
+        required: false
+        default: ""
+      dry_run:
+        description: "Dry run (nothing is posted)"
+        type: boolean
+        default: false
+concurrency: publish
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install requests
+      - name: Publish due reels
+        env:
+          IG_TOKEN_KAHANI: ${{ secrets.IG_TOKEN_KAHANI }}
+          IG_TOKEN_INTERVIEW: ${{ secrets.IG_TOKEN_INTERVIEW }}
+          IG_TOKEN_GTA: ${{ secrets.IG_TOKEN_GTA }}
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.only }}" ]; then ARGS="$ARGS --only ${{ github.event.inputs.only }}"; fi
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          python bot/meta_publish.py $ARGS
+      - name: Save state
+        if: always()
+        run: |
+          git config user.name "reel-bot"; git config user.email "reel-bot@users.noreply.github.com"
+          git add state.json || true
+          git diff --cached --quiet || (git commit -m "state: published reels" && git pull --rebase -q && git push)
