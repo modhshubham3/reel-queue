@@ -76,11 +76,31 @@ ACTIONS = {  # name -> (needs confirm, argv, label)
     "ytupload": (True, ["yt_publish.py", Q], "YouTube poora hafta"),
     "igcheck": (False, ["ig_publish.py", M, "--dry-run"], "Instagram check"),
     "igtest": (True, ["ig_publish.py", M, "--only", "i2"], "Instagram test (i2)"),
+    "igplan": (False, ["ig_publish.py", M, "--plan"], "Instagram plan/limits"),
     "igfree": (True, ["ig_publish.py", M, "--lanes", "interview,kahani"], "Instagram free-plan (interview+kahani)"),
     "igall": (True, ["ig_publish.py", M], "Instagram poora hafta"),
 }
-HELP = ("Commands:\n/status  kya ho chuka, kya baaki\n/ytcheck  /yttest  /ytupload  /yt ID  (YouTube)\n/igcheck  /igtest  /igfree  /igall  /ig ID  (Instagram schedule)\n/ignow ID  turant post (jaise /ignow i2)\n"
+HELP = ("Commands:\n/status  kya ho chuka, kya baaki\n/ytcheck  /yttest  /ytupload  /yt ID  (YouTube)\n/igcheck  /igtest  /igfree  /igall  /ig ID  (Instagram schedule)\n/ignow ID  turant post (jaise /ignow i2)\n/igplan  plan ki limits dekho\n/igauto on|off  khud hi har 3 ghante mein agle video schedule karta rahe\n"
         "/update  naye scripts download\n/confirm  upload se pehle haan\n/cancel\nUpload wale commands pehle /confirm maangte hain.")
+
+AUTO = HERE / "auto.json"; kick = threading.Event()
+def auto_on(): return bool(jload(AUTO).get("on"))
+def set_auto(v): AUTO.write_text(json.dumps({"on": v}))
+def autopilot():
+    last = 0.0
+    while True:
+        kick.wait(30)
+        try:
+            forced = kick.is_set(); kick.clear()
+            if not auto_on() or (not forced and time.time() - last < 3 * 3600): continue
+            if not busy.acquire(blocking=False): continue
+            try:
+                last = time.time()
+                out = subprocess.run([sys.executable, str(HERE / "ig_publish.py"), M, "--lanes", "interview,kahani"], capture_output=True, text=True, timeout=1800, cwd=str(HERE)).stdout
+                keep = [l.strip()[:200] for l in out.splitlines() if l.startswith(("upload", "   OK", "   FAILED", "   ERROR", "   STOP", "No API"))]
+                if any(("OK" in l or "FAILED" in l or "ERROR" in l) for l in keep): send("Auto Instagram:\n" + "\n".join(keep))
+            finally: busy.release()
+        except Exception as e: log(f"autopilot error: {e}")
 
 def update():
     ok = []
@@ -106,6 +126,10 @@ def handle(text):
         p = pending.pop("p", None)
         if not p or time.time() > p[0]: send("Koi pending kaam nahi (ya 60 second beet gaye).")
         else: run(p[1], p[2])
+    elif cmd == "igauto":
+        if arg.lower() == "on": set_auto(True); kick.set(); send("Auto Instagram ON. Abhi ek round chalega, phir har 3 ghante mein jo slot khaali hoga usme agla video schedule hoga. Kuch hone par yahin batayunga. Band: /igauto off")
+        elif arg.lower() == "off": set_auto(False); send("Auto Instagram OFF.")
+        else: send("Auto Instagram abhi: " + ("ON" if auto_on() else "OFF") + "\n/igauto on  ya  /igauto off")
     elif cmd == "ignow" and arg:
         pending["p"] = (time.time() + 60, ["ig_publish.py", M, "--only", arg, "--now"], f"IG {arg} ABHI POST"); send(f"IG {arg} ABHI Instagram par post karun (schedule nahi, turant)? Haan ke liye /confirm (60 second)")
     elif cmd in ("yt", "ig") and arg:
@@ -119,6 +143,7 @@ def handle(text):
 
 def main():
     if not TOKEN or not CHAT: raise SystemExit("bot.env mein BOT_TOKEN aur CHAT_ID chahiye (bot.env.example dekho).")
+    threading.Thread(target=autopilot, daemon=True).start()
     log("studio bot chalu"); OFF = HERE / "tg_offset.txt"
     try: offset = int(OFF.read_text().strip())      # last handled update, so /update (which exits) is never replayed
     except Exception: offset = None
