@@ -119,7 +119,9 @@ def handle(text):
 
 def main():
     if not TOKEN or not CHAT: raise SystemExit("bot.env mein BOT_TOKEN aur CHAT_ID chahiye (bot.env.example dekho).")
-    log("studio bot chalu"); offset = None
+    log("studio bot chalu"); OFF = HERE / "tg_offset.txt"
+    try: offset = int(OFF.read_text().strip())      # last handled update, so /update (which exits) is never replayed
+    except Exception: offset = None
     try: send("Studio bot chalu ✅  /help")
     except Exception as e: log(f"startup send failed: {e}")
     while True:
@@ -127,6 +129,8 @@ def main():
             d = tg("getUpdates", data={"timeout": 50, **({"offset": offset} if offset else {})}, t=70)
             for u in d.get("result", []):
                 offset = u["update_id"] + 1; m = u.get("message") or {}
+                try: OFF.write_text(str(offset))   # remember BEFORE handling (at-most-once)
+                except Exception: pass
                 if str((m.get("chat") or {}).get("id")) != CHAT or not m.get("text"): continue
                 log(f"cmd: {m['text'][:40]}"); handle(m["text"])
         except Exception as e: log(f"poll error: {e}"); time.sleep(5)
