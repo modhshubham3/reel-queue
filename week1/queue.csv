@@ -1,0 +1,162 @@
+﻿id,channel,file,title,description,tags,publish_at,made_for_kids,synthetic
+i1,interview,videos/i1_valueref.mp4,"struct vs class in C#: change B, does A change? 🔑 #CSharp #Shorts","C# interview question: value type or reference type? A struct is copied like a photocopy; a class is shared like a second key to the same house.
+
+Say this in the interview: ""A struct is copied. A class is shared by reference.""
+
+Code compiled and run on .NET 8 (C# 12): struct a.X=1 b.X=9, class c.X=9 d.X=9.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.","c# struct vs class, value type vs reference type c#, c# interview questions, dotnet interview, c# for beginners, coding interview shorts",2026-11-23 12:30,no,yes
+k1,kahani,videos/k1_kauve.mp4,Agra mein kitne kauve? Birbal ka jawab 🐦 #AkbarBirbal #Shorts,"Akbar ne poochha: Agra mein kitne kauve hain? Birbal ne turant jawab diya. Agar zyada nikle to rishtedaar mehman aaye honge, agar kam nikle to hamare kauve bahar gaye honge.
+
+💡 Seekh: jis sawal ka jawab ginna na ho, uska jawab soch ke dena padta hai.
+
+👇 Aapko kya lagta hai? Comment mein batao.
+🔔 Aisi aur kahaniyon ke liye @kahaniyon_wali_raat ko subscribe karo.
+
+📖 Lok-katha ka ek prachalit roop. Animation aur awaaz AI se bani hai.","akbar birbal ki kahani, birbal ke kauve, akbar birbal story in hindi, birbal ki chaturai, hindi moral story, animated hindi story, kahaniyon wali raat",2026-11-23 19:00,no,yes
+g1,gta,videos/g1_platform.mp4,GTA VI kis platform par aaya? Official page kya kehti hai 🎮 #GTAVI #Shorts,"Rockstar ki official GTA VI page ke hisaab se: Grand Theft Auto VI Out Now, platforms PlayStation 5 aur Xbox Series X|S, aur 'Plays Best On PlayStation 5'. Newswire: Now Available, November 19, 2026. PC ka zikr is page par nahi hai.
+
+Source: rockstargames.com/VI (21 Nov 2026).
+
+Fan-made explainer, koi game footage nahi. Rockstar Games se koi sambandh nahi. Animation aur awaaz AI se bani hai.","gta vi platform, gta 6 ps5 xbox, gta vi release date, gta 6 hindi, gta 6 news hindi, gaming hindi",2026-11-23 21:00,no,yes
+i2,interview,videos/i2_stringbuilder.mp4,string vs StringBuilder in C#: does t change? 🪧 #CSharp #Shorts,"C# interview question: string or StringBuilder? A string is immutable, so += creates a new string. A StringBuilder changes the same object.
+
+Say this in the interview: ""string is immutable. StringBuilder changes the same object.""
+
+Code compiled and run on .NET 8: t=hello, sb2=hello world (same reference True).
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.","c# string vs stringbuilder, string immutable c#, c# interview questions, dotnet interview, c# for beginners, coding interview shorts",2026-11-24 12:30,no,yes
+k2,kahani,videos/k2_tenali.mp4,Billi ne doodh kyun chhoda? Tenali Rama ki chaal 🐈 #TenaliRama #Shorts,"Raja ne gareeb logon ko billi aur doodh diya. Tenali Rama ne apni billi ko garam doodh pilaya, aur uska muh jal gaya. Phir wo doodh dekhte hi bhaagne lagi.
+
+💡 Seekh: jo cheez dikhti hai, wahi poora sach nahi.
+
+👇 Aapko kya lagta hai? Comment mein batao.
+🔔 Aisi aur kahaniyon ke liye @kahaniyon_wali_raat ko subscribe karo.
+
+📖 Lok-katha, kai versions maujood hain. Animation aur awaaz AI se bani hai.","tenali rama ki kahani, tenali rama and the cat, tenali rama stories in hindi, hindi moral story, animated hindi story, kahaniyon wali raat",2026-11-24 19:00,no,yes
+g2,gta,videos/g2_story.mp4,GTA VI ki official kahani: Jason aur Lucia 🌴 #GTAVI #Shorts,"Rockstar ki official GTA VI page ke hisaab se: Jason aur Lucia ko hamesha pata tha ki halaat unke khilaaf hain. Ek aasaan score galat ho jaata hai, aur wo state of Leonida mein ek criminal conspiracy ke beech phans jaate hain, jahan unhe ek-doosre par bharosa karna padta hai.
+
+Source: rockstargames.com/VI (21 Nov 2026).
+
+Fan-made explainer, koi game footage nahi. Rockstar Games se koi sambandh nahi. Animation aur awaaz AI se bani hai.","gta vi story, jason and lucia, gta 6 story hindi, gta vi leonida, gta 6 hindi, gaming hindi",2026-11-24 21:00,no,yes
+i3,interview,videos/i3_abstract_iface.mp4,Abstract class vs interface in C#: pick the right one 🏠 #CSharp #Shorts,"C# interview question: abstract class or interface? Abstract class shares state and code, only one base class. Interface is a contract, many allowed, and since C# 8 it can have default methods.
+
+Say this in the interview: ""Abstract class shares state. Interface is a contract.""
+
+Compiler checked on .NET 8: CS1721 (two base classes), CS0525 (interface instance field); a class with two interfaces compiles.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.","abstract class vs interface c#, c# interview questions, c# default interface methods, dotnet interview, c# oop, coding interview shorts",2026-11-25 12:30,no,yes
+k3,kahani,videos/k3_yaksha.mp4,Yaksha ne poochha: sabse bada ashcharya kya hai? 💧 #Mahabharat #Shorts,"Pandav jungle mein pyaase the. Ek Yaksha ne kaha ki pehle mere sawalon ke jawab do. Yudhishthir ne sabse bada ashcharya bataya: roz log jaate hain, phir bhi jo bache wo sochte hain hum amar hain. Kaha jaata hai, Yaksha khud Dharma the.
+
+💡 Seekh: apne aas-paas ki sachchai ko dekhna seekho.
+
+👇 Aapko kya lagta hai? Comment mein batao.
+🔔 Aisi aur kahaniyon ke liye @kahaniyon_wali_raat ko subscribe karo.
+
+📖 Mahabharat ka ek prachalit prasang (Vana Parva, kai versions maujood hain). Animation aur awaaz AI se bani hai.","yaksha prashna, yudhishthir yaksha sanvad, sabse bada ashcharya, mahabharat ki kahani, mahabharat stories in hindi, hindi moral story, kahaniyon wali raat",2026-11-25 19:00,no,yes
+g3,gta,videos/g3_leonida.mp4,Leonida kaun si jagah hai? GTA VI official page 🗺️ #GTAVI #Shorts,"Rockstar ki official GTA VI page par kahani ki pehli line hai 'Vice City, USA', tagline hai 'Welcome to Leonida', aur kahani state of Leonida mein phaili hai. Leonida asli jagah hai ya nahi, ye us page par nahi likha.
+
+Source: rockstargames.com/VI (21 Nov 2026).
+
+Fan-made explainer, koi game footage nahi. Rockstar Games se koi sambandh nahi. Animation aur awaaz AI se bani hai.","gta vi leonida, vice city usa, gta 6 map hindi, welcome to leonida, gta 6 hindi, gaming hindi",2026-11-25 21:00,no,yes
+i4,interview,videos/i4_increment.mp4,C# quiz: what does i++ + ++i print? 🤔 #CSharp #Shorts,"C# quiz: int i = 0; int r = i++ + ++i; What is r? Post-increment returns the old value, pre-increment the new one.
+
+Say this in the interview: ""Post-increment returns the old value, pre-increment the new.""
+
+Code compiled and run on .NET 8: r=2, i=2.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.","c# i++ vs ++i, post increment pre increment c#, c# quiz, c# interview questions, what does this print c#, coding interview shorts",2026-11-26 12:30,no,yes
+k4,kahani,videos/k4_bharat.mp4,Bharat ne Ram ki padukaen singhasan par kyun rakhi? 🪔 #Ramayan #Shorts,"Ram vanvaas mein the. Bharat unhe wapas lene gaye, par Ram ne pita ka vachan nibhana tha. Bharat ne unki padukaen maangi, singhasan par rakhi aur khud Nandigram mein rahe.
+
+💡 Seekh: adhikar ka matlab zimmedari hai, sukh nahi.
+
+👇 Aapko kya lagta hai? Comment mein batao.
+🔔 Aisi aur kahaniyon ke liye @kahaniyon_wali_raat ko subscribe karo.
+
+📖 Ramayan ka ek prachalit prasang (Ayodhya Kand, kai versions maujood hain). Animation aur awaaz AI se bani hai.","bharat ki padukaen, bharat milap, ram bharat ki kahani, ramayan ki kahani, ramayan stories in hindi, hindi moral story, kahaniyon wali raat",2026-11-26 19:00,no,yes
+g4,gta,videos/g4_editions.mp4,GTA VI Ultimate Edition aur Vintage Vice City Pack: official page 🧰 #GTAVI #Shorts,"Rockstar ki official GTA VI page par: Ultimate Edition, 'an exclusive collection of items threaded across all aspects of Jason and Lucia's story', aur digital add-on Vintage Vice City Pack. Console members ke liye optional benefits bhi likhe hain. Daam us page par nahi dikha.
+
+Source: rockstargames.com/VI (21 Nov 2026).
+
+Fan-made explainer, koi game footage nahi. Rockstar Games se koi sambandh nahi. Animation aur awaaz AI se bani hai.","gta vi ultimate edition, vintage vice city pack, gta 6 editions hindi, gta 6 hindi, gaming hindi",2026-11-26 21:00,no,yes
+i5,interview,videos/i5_joins.mp4,INNER JOIN vs LEFT JOIN: where did Karan go? 🪑 #SQL #Shorts,"SQL interview question: inner join or left join? INNER JOIN drops rows with no match. LEFT JOIN keeps every row from the left table and shows NULL where there is no match.
+
+Say this in the interview: ""LEFT JOIN keeps all rows from the left table.""
+
+Query run in SQLite 3.53.1: INNER JOIN 3 rows, LEFT JOIN 4 rows (Karan with NULL).
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.","inner join vs left join, sql joins explained, sql interview questions, left join null, sql for beginners, coding interview shorts",2026-11-27 12:30,no,yes
+k5,kahani,videos/k5_jatayu.mp4,Buddhe Jatayu ne Raavan ko kyun roka? 🦅 #Ramayan #Shorts,"Raavan Sita ko le ja raha tha. Jatayu ne pukaar suni aur buddhe hone par bhi Raavan ko roka. Ladai mein ghayal hokar gire, aur Ram ko sab bataya. Ram ne unke antim sanskar kiye.
+
+💡 Seekh: jeet-haar se bada sahas hota hai.
+
+👇 Aapko kya lagta hai? Comment mein batao.
+🔔 Aisi aur kahaniyon ke liye @kahaniyon_wali_raat ko subscribe karo.
+
+📖 Ramayan ka ek prachalit prasang (Aranyak Kand, kai versions maujood hain). Animation aur awaaz AI se bani hai.","jatayu ki kahani, jatayu raavan yuddh, jatayu ka sahas, ramayan ki kahani, ramayan stories in hindi, hindi moral story, kahaniyon wali raat",2026-11-27 19:00,no,yes
+g5,gta,videos/g5_warning.mp4,GTA VI bachchon ke liye nahi hai: official warning 🔞 #GTAVI #Shorts,"Rockstar ki official GTA VI page par ye content warning likhi hai: Blood and Gore, Intense Violence, Mature Humor, Nudity, Strong Language, Strong Sexual Content, Use of Drugs and Alcohol. In-Game Purchases bhi hain. Ye game bade logon ke liye hai.
+
+Source: rockstargames.com/VI (21 Nov 2026).
+
+Fan-made explainer, koi game footage nahi. Rockstar Games se koi sambandh nahi. Animation aur awaaz AI se bani hai.","gta vi age rating, gta 6 content warning, gta 6 for kids, gta 6 hindi, gaming hindi",2026-11-27 21:00,no,yes
+i6,interview,videos/i6_having.mp4,SQL WHERE vs HAVING in one minute 🏫 #SQL #Shorts,"SQL interview question: WHERE or HAVING? WHERE filters rows before grouping. HAVING filters groups after aggregation.
+
+Say this in the interview: ""WHERE filters rows. HAVING filters groups.""
+
+Query run in SQLite 3.53.1: HAVING COUNT(*)>1 works; WHERE COUNT(*)>1 raises 'misuse of aggregate'.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.","where vs having sql, sql having clause, sql interview questions, group by having, sql for beginners, coding interview shorts",2026-11-28 12:30,no,yes
+k6,kahani,videos/k6_sher_khargosh.mp4,Khargosh ne sher ko kuan mein kaise giraya? Panchatantra 🐇 #Panchatantra #Shorts,"Ek sher roz kai jaanwar maar deta tha. Jaanwaron ne sandhi ki ki roz ek khud aayega. Ek din khargosh ki baari aayi, wo jaan-boojhkar der se pahunchi aur sher ko kuan ke paani mein uski hi parchhai dikha di.
+
+💡 Seekh: buddhi bal se badi hoti hai.
+
+👇 Aapko kya lagta hai? Comment mein batao.
+🔔 Aisi aur kahaniyon ke liye @kahaniyon_wali_raat ko subscribe karo.
+
+📖 Panchatantra ki ek prachalit kahani. Animation aur awaaz AI se bani hai.","panchatantra sher aur khargosh, sher aur khargosh ki kahani, panchatantra stories in hindi, hindi moral story, animated hindi story, kahaniyon wali raat",2026-11-28 19:00,no,yes
+i7,interview,videos/i7_boxing.mp4,"C# quiz: (long)o on a boxed int, what happens? 📦 #CSharp #Shorts","C# quiz: object o = 5; long l = (long)o; A boxed int can only be unboxed as an int, so this throws InvalidCastException. Fix: (long)(int)o.
+
+Say this in the interview: ""Unbox to the exact type first, then convert.""
+
+Code compiled and run on .NET 8: InvalidCastException: Unable to cast object of type 'System.Int32' to type 'System.Int64'.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.","c# boxing unboxing, invalidcastexception c#, c# quiz, c# interview questions, what does this print c#, coding interview shorts",2026-11-29 12:00,no,yes
+i8,interview,videos/i8_secondhigh.mp4,"2nd highest salary in SQL, one query 🏁 #SQL #Shorts","SQL interview question: second highest salary. SELECT MAX(Salary) FROM Emp WHERE Salary < (SELECT MAX(Salary) FROM Emp);
+
+Say this in the interview: ""Max of everything below the max.""
+
+Query run in SQLite 3.53.1 on salaries 50k, 70k, 60k, 40k: result 60000.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.","second highest salary sql, sql interview questions, nth highest salary, sql subquery, sql for beginners, coding interview shorts",2026-11-29 15:00,no,yes
+k7,kahani,videos/k7_kauwa_saanp.mp4,Kauwe ne saanp ko kaise haraya? Panchatantra 🐍 #Panchatantra #Shorts,"Ek kauwa aur uski patni ped par rehte the, aur ped ke bil mein ek saanp tha jo unke ande kha jaata tha. Kauwe ne ek raani ka haar uthakar saanp ke bil ke paas gira diya. Sipahiyon ne haar dhoondhte hue saanp ko dekha aur maar diya.
+
+💡 Seekh: kamzor bhi tareeke se jeet sakta hai.
+
+👇 Aapko kya lagta hai? Comment mein batao.
+🔔 Aisi aur kahaniyon ke liye @kahaniyon_wali_raat ko subscribe karo.
+
+📖 Panchatantra ki ek prachalit kahani. Animation aur awaaz AI se bani hai.","panchatantra kauwa aur saanp, kauwa aur saanp ki kahani, panchatantra stories in hindi, hindi moral story, animated hindi story, kahaniyon wali raat",2026-11-29 19:00,no,yes
+k8,kahani,videos/k8_sudama.mp4,Sudama ke chawal: dosti ki kahani 🌾 #SudamaKrishna #Shorts,"Sudama bahut gareeb the. Patni ke kehne par wo dost Krishna se milne gaye, tohfe mein sirf thode se chawal the. Krishna ne unhe gale lagaya. Kaha jaata hai, ghar lautkar Sudama ne mahal dekha.
+
+💡 Seekh: dosti mein tohfe ki keemat nahi, bhaav ki hoti hai.
+
+👇 Aapko kya lagta hai? Comment mein batao.
+🔔 Aisi aur kahaniyon ke liye @kahaniyon_wali_raat ko subscribe karo.
+
+📖 Bhagwat Purana ka ek prachalit prasang (kai versions maujood hain). Animation aur awaaz AI se bani hai.","sudama ke chawal, krishna sudama ki kahani, krishna sudama dosti, hindi moral story, bhagwat katha, animated hindi story, kahaniyon wali raat",2026-11-29 21:00,no,yes
