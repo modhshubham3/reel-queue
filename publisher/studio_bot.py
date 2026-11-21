@@ -79,7 +79,7 @@ ACTIONS = {  # name -> (needs confirm, argv, label)
     "igfree": (True, ["ig_publish.py", M, "--lanes", "interview,kahani"], "Instagram free-plan (interview+kahani)"),
     "igall": (True, ["ig_publish.py", M], "Instagram poora hafta"),
 }
-HELP = ("Commands:\n/status  kya ho chuka, kya baaki\n/ytcheck  /yttest  /ytupload  /yt ID  (YouTube)\n/igcheck  /igtest  /igfree  /igall  /ig ID  (Instagram)\n"
+HELP = ("Commands:\n/status  kya ho chuka, kya baaki\n/ytcheck  /yttest  /ytupload  /yt ID  (YouTube)\n/igcheck  /igtest  /igfree  /igall  /ig ID  (Instagram schedule)\n/ignow ID  turant post (jaise /ignow i2)\n"
         "/update  naye scripts download\n/confirm  upload se pehle haan\n/cancel\nUpload wale commands pehle /confirm maangte hain.")
 
 def update():
@@ -106,6 +106,8 @@ def handle(text):
         p = pending.pop("p", None)
         if not p or time.time() > p[0]: send("Koi pending kaam nahi (ya 60 second beet gaye).")
         else: run(p[1], p[2])
+    elif cmd == "ignow" and arg:
+        pending["p"] = (time.time() + 60, ["ig_publish.py", M, "--only", arg, "--now"], f"IG {arg} ABHI POST"); send(f"IG {arg} ABHI Instagram par post karun (schedule nahi, turant)? Haan ke liye /confirm (60 second)")
     elif cmd in ("yt", "ig") and arg:
         argv = (["yt_publish.py", Q, "--only", arg] if cmd == "yt" else ["ig_publish.py", M, "--only", arg]); pending["p"] = (time.time() + 60, argv, f"{cmd.upper()} {arg}")
         send(f"{cmd.upper()} {arg} upload/schedule karun? Haan ke liye /confirm (60 second)")

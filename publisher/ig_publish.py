@@ -5,6 +5,7 @@
   python ig_publish.py ..\\week1\\meta.json --only i2       schedule just one video (test)
   python ig_publish.py ..\\week1\\meta.json --lanes interview,kahani   free plan: skip GTA
   python ig_publish.py ..\\week1\\meta.json                 schedule everything not done yet
+  python ig_publish.py ..\\week1\\meta.json --only i2 --now   post it RIGHT NOW (also works for a video already scheduled)
 
 Put your Publora API key (Publora dashboard -> API) in publisher/publora_key.txt (one line) or set PUBLORA_API_KEY.
 Each Instagram account must be connected in Publora (Channels). The account is matched by its Instagram username.
@@ -39,7 +40,7 @@ def call(method, path, key, **kw):
 
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    dry = "--dry-run" in sys.argv; only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else None
+    dry = "--dry-run" in sys.argv; go = "--now" in sys.argv; only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else None
     lanes = sys.argv[sys.argv.index("--lanes") + 1].split(",") if "--lanes" in sys.argv else None   # e.g. interview,kahani
     if not args: raise SystemExit(__doc__)
     meta_path = Path(args[0]).resolve(); base = meta_path.parent
@@ -56,10 +57,16 @@ def main():
         rid = v["id"]
         if only and only not in rid: continue
         if lanes and v["lane"] not in lanes: continue
+        if rid in done and go and not dry:
+            try:   # already uploaded/scheduled earlier -> publish that same post immediately (docs: update-post publishNow)
+                call("PUT", f"/update-post/{done[rid]}", key, json={"publishNow": True}, headers={"Idempotency-Key": f"w1-{rid}-now"})
+                print(f"   OK {rid}: abhi publish ho raha hai (postGroupId {done[rid]}). 1-2 minute mein Instagram par aayega."); n += 1
+            except Exception as e: print(f"   FAILED {rid}: {e}")
+            continue
         if rid in done: print(f"skip   {rid}: already scheduled ({done[rid]})"); continue
         when = datetime.strptime(v["slot"], "%Y-%m-%d %H:%M").replace(tzinfo=IST)
         video = base / "videos" / f"{v['file']}.mp4"; cover = base / "covers" / f"{v['file']}.png"
-        warn = "  !! time is in the past" if when <= now else ""
+        warn = "  !! time is in the past" if (when <= now and not go) else ""
         print(f"{'plan  ' if dry else 'upload'} {rid}: @{v['ig_handle']}  {when:%Y-%m-%d %H:%M} IST  {video.name}  cover={'yes' if cover.exists() else 'NO'}{warn}")
         if dry: continue
         if not video.exists(): print("   ERROR video missing:", video); continue
@@ -73,18 +80,18 @@ def main():
             with open(video, "rb") as f:
                 r = requests.put(up["uploadUrl"], data=f, headers={"Content-Type": "video/mp4"}, timeout=600)
             if r.status_code >= 300: raise RuntimeError(f"video upload failed {r.status_code}: {r.text[:200]}")
-            patch = {"status": "scheduled", "scheduledTime": when.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")}
+            patch = {"publishNow": True} if go else {"status": "scheduled", "scheduledTime": when.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")}
             if cover.exists():
                 with open(cover, "rb") as f:
                     c = call("POST", "/upload-instagram-cover", key, files={"cover": (cover.name, f, "image/png")}, data={"postGroupId": pg})
                 patch["platformSettings"] = {"instagram": {"coverUrl": c["cover"]["url"]}}
             res = call("PUT", f"/update-post/{pg}", key, json=patch)
             done[rid] = pg; done_path.write_text(json.dumps(done, indent=1)); n += 1
-            print(f"   OK scheduled for {res.get('scheduledTime', patch['scheduledTime'])}  (postGroupId {pg})")
+            print(f"   OK {'publishing NOW' if go else 'scheduled for ' + str(res.get('scheduledTime', patch.get('scheduledTime')))}  (postGroupId {pg})")
         except Exception as e:
             print(f"   FAILED {rid}: {e}")
             if any(w in str(e).lower() for w in ("limit", "queue", "plan", "upgrade", "quota", "horizon", "ahead")):
                 print("   >> Free plan limit reached (3 scheduled at a time / 15 posts a month / 7 days ahead). Run this again in 2-3 days."); break
-    print(f"finished: {n} scheduled" + (" (dry run)" if dry else ""))
+    print(f"finished: {n} " + ("published now" if go else "scheduled") + (" (dry run)" if dry else ""))
 
 if __name__ == "__main__": main()
