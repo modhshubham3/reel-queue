@@ -19,6 +19,7 @@ echo 11 = INSTAGRAM CHECK (kuch schedule nahi hota)
 echo 12 = INSTAGRAM TEST: sirf 1 reel (i2)
 echo 13 = INSTAGRAM: poora hafta schedule
 echo 14 = INSTAGRAM FREE PLAN: sirf interview+kahani (3-3 karke)
+echo  B = TELEGRAM BOT chalu karo (phone se control)
 echo  U = UPDATE (naye scripts khud download)
 echo  0 = Band karo
 echo.
@@ -38,6 +39,7 @@ if "%c%"=="11" python ig_publish.py ..\week1\meta.json --dry-run & goto menu
 if "%c%"=="12" python ig_publish.py ..\week1\meta.json --only i2 & goto menu
 if "%c%"=="13" python ig_publish.py ..\week1\meta.json & goto menu
 if "%c%"=="14" python ig_publish.py ..\week1\meta.json --lanes interview,kahani & goto menu
+if /I "%c%"=="B" call run_studio_bot.bat
 if /I "%c%"=="U" call UPDATE.bat & goto menu
 if "%c%"=="0" exit
 goto menu
