@@ -33,7 +33,7 @@ Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @in
 AI-made explainer.
 
 #CSharp #DotNet #Shorts #Interview #Coding","C# interview,ref vs out,dotnet,C# tricks",2026-11-24 17:30,no,yes
-i13,interview,videos/i13_boxing.mp4,object o = 5; (long)o. Does it work? C# boxing trap,"C# interview: boxing and unboxing. Casting a boxed int straight to long throws InvalidCastException. Unbox to the exact type first.
+i13,interview,videos/i13_eqeq.mp4,"== vs Equals in C#: same strings, true or false?","C# quiz: two strings that both say hi. Compared as strings they are equal, compared as object references they are not. Equals compares content. The flats analogy and the real output.
 
 Code compiled and run on .NET 8 (C# 12).
 
@@ -41,7 +41,7 @@ Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @in
 
 AI-made explainer.
 
-#CSharp #DotNet #Shorts #Interview #Boxing","C# interview,boxing unboxing,InvalidCastException,dotnet",2026-11-25 12:30,no,yes
+#CSharp #DotNet #Shorts #Interview #Coding","C# interview,== vs Equals,string equality,reference equality,dotnet",2026-11-25 12:30,no,yes
 i14,interview,videos/i14_linq.mp4,"LINQ quiz: filter first, then Add(4). How many match?","C# quiz: LINQ is deferred. The query runs when you enumerate it, not when you write it. The recipe card analogy.
 
 Code compiled and run on .NET 8 (C# 12).
