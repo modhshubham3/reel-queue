@@ -87,7 +87,7 @@ def run(cmd, label):
         if not busy.acquire(blocking=False): send("Ek kaam pehle se chal raha hai, thoda ruko."); return
         try:
             send(f"▶ {label} shuru...")
-            p = subprocess.Popen([sys.executable, "-u"] + cmd, cwd=HERE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace")
+            p = subprocess.Popen([sys.executable, "-u"] + cmd, cwd=HERE, env={**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, encoding="utf-8", errors="replace")
             buf, last = [], time.time()
             for line in p.stdout:
                 line = line.rstrip()
@@ -130,7 +130,7 @@ def autopilot():
             if not busy.acquire(blocking=False): continue
             try:
                 last = time.time()
-                out = subprocess.run([sys.executable, str(HERE / "ig_publish.py"), M, "--lanes", "interview,kahani"], capture_output=True, text=True, timeout=1800, cwd=str(HERE)).stdout
+                out = subprocess.run([sys.executable, str(HERE / "ig_publish.py"), M, "--lanes", "interview,kahani"], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=1800, cwd=str(HERE), env={**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}).stdout
                 keep = [l.strip()[:200] for l in out.splitlines() if l.startswith(("upload", "   OK", "   FAILED", "   ERROR", "   STOP", "No API"))]
                 if any(("OK" in l or "FAILED" in l or "ERROR" in l) for l in keep): send("Auto Instagram:\n" + "\n".join(keep))
             finally: busy.release()

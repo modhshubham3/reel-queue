@@ -16,6 +16,9 @@ privacyStatus is private; status.containsSyntheticMedia is the AI-disclosure fla
 uploaded.json remembers finished rows, so running again never uploads a duplicate.
 """
 import csv, json, sys, time
+for _st in (sys.stdout, sys.stderr):
+    try: _st.reconfigure(encoding="utf-8", errors="replace")   # Windows console is cp1252: emoji in a title used to crash the run
+    except Exception: pass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -64,7 +67,7 @@ def main():
     if not args: raise SystemExit(__doc__)
     q = Path(args[0]); rows = list(csv.DictReader(open(q, encoding="utf-8-sig")))
     now = datetime.now(IST); n = 0
-    go = "--now" in sys.argv
+    go = "--now" in sys.argv; blocked = set()
     per = int(sys.argv[sys.argv.index("--per-channel") + 1]) if "--per-channel" in sys.argv else None; cnt = {}
     for r in rows:
         rid = r["id"].strip()
@@ -74,6 +77,7 @@ def main():
         if not f.exists(): print(f"ERROR  {rid}: file not found: {f}"); continue
         ch = r["channel"].strip()
         if per is not None and cnt.get(ch, 0) >= per: continue
+        if ch in blocked: print(f"skip   {rid}: {ch} channel ki limit khatam (kal dobara)"); continue
         body, when = body_for(r, go)
         warn = "  !! publish_at is in the past: it would go public IMMEDIATELY" if when <= now else ""
         print(f"{'plan ' if dry else 'upload'} {rid}: [{r['channel']}] {body['snippet']['title']!r}  at {'NOW (public immediately)' if go else when.strftime('%Y-%m-%d %H:%M') + ' IST'}  kids={body['status']['selfDeclaredMadeForKids']} synthetic={body['status']['containsSyntheticMedia']}{warn}")
@@ -88,7 +92,8 @@ def main():
             except HttpError as e:
                 code = getattr(e.resp, "status", 0)
                 if code in (500, 502, 503, 504) and tries < 5: tries += 1; print(f"   server busy ({code}), retry {tries}/5"); time.sleep(5); continue
-                if "quotaExceeded" in str(e) or "uploadLimitExceeded" in str(e): print(f"   STOP: YouTube ki aaj ki upload limit khatam ({e.resp.status}). Baaki rows kal dobara chalao, ye apne aap wahin se aage badhega."); print(f"finished: {n} uploaded"); return
+                if "uploadLimitExceeded" in str(e): blocked.add(ch); print(f"   CHANNEL LIMIT: {ch} channel ki aaj ki upload limit khatam. Isi channel ke baaki rows chhod raha hoon, doosre channels chalte rahenge."); failed = True; break
+                if "quotaExceeded" in str(e): print("   STOP: Google project ki aaj ki API quota khatam. Baaki rows kal dobara chalao, ye apne aap wahin se aage badhega."); print(f"finished: {n} uploaded"); return
                 print(f"   FAILED {rid}: {e}"); failed = True; break
             except Exception as e:
                 if tries < 5: tries += 1; print(f"   network error, retry {tries}/5: {e}"); time.sleep(5); continue
@@ -96,6 +101,6 @@ def main():
         if failed: continue
         done[rid] = resp["id"]; done_path.write_text(json.dumps(done, indent=1)); n += 1; cnt[ch] = cnt.get(ch, 0) + 1
         print(f"   OK https://www.youtube.com/watch?v={resp['id']}  " + ("(PUBLIC now)" if go else f"(private now, goes public at {when:%H:%M} IST)"))
-    print(f"finished: {n} uploaded" + (" (dry run, nothing sent)" if dry else ""))
+    print(f"finished: {n} uploaded" + (" (dry run, nothing sent)" if dry else "") + (f"  | limit khatam: {', '.join(sorted(blocked))} (kal dobara chalao)" if blocked else ""))
 
 if __name__ == "__main__": main()
