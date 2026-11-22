@@ -1,0 +1,265 @@
+﻿id,channel,file,title,description,tags,publish_at,made_for_kids,synthetic
+i09,interview,videos/i09_di.mp4,Singleton vs Scoped vs Transient: say it in one line,"C# interview: what is the difference between singleton, scoped and transient in ASP.NET Core dependency injection? Chai stall analogy: one owner, one cup per visit, a new cup every time.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.
+
+#CSharp #DotNet #Shorts #Interview #DependencyInjection","C# interview,dotnet,dependency injection,ASP.NET Core,singleton scoped transient",2026-11-23 12:30,no,yes
+i10,interview,videos/i10_deltrunc.mp4,DELETE vs TRUNCATE vs DROP: which one removes the table?,"SQL interview: DELETE picks rows, TRUNCATE empties the table, DROP removes it. The notebook analogy in 40 seconds.
+
+Behaviour shown for SQL Server.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.
+
+#SQL #SQLServer #Shorts #Interview #Database","SQL interview,delete vs truncate vs drop,SQL Server,database",2026-11-23 17:30,no,yes
+i11,interview,videos/i11_constro.mp4,"const vs readonly in C#: both 'cannot change', so what differs?","C# interview: const is fixed at compile time, readonly is set once at runtime (per object). Real compiler errors CS0191 and CS0131 shown.
+
+Code compiled and run on .NET 8 (C# 12).
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.
+
+#CSharp #DotNet #Shorts #Interview #Coding","C# interview,const vs readonly,dotnet,C# tricks",2026-11-24 12:30,no,yes
+i12,interview,videos/i12_refout.mp4,"ref vs out in C#: both pass by reference, so what differs?","C# interview: ref needs a value first, out must be assigned inside the method. The unassigned variable error CS0165 shown.
+
+Code compiled and run on .NET 8 (C# 12).
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.
+
+#CSharp #DotNet #Shorts #Interview #Coding","C# interview,ref vs out,dotnet,C# tricks",2026-11-24 17:30,no,yes
+i13,interview,videos/i13_boxing.mp4,object o = 5; (long)o. Does it work? C# boxing trap,"C# interview: boxing and unboxing. Casting a boxed int straight to long throws InvalidCastException. Unbox to the exact type first.
+
+Code compiled and run on .NET 8 (C# 12).
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.
+
+#CSharp #DotNet #Shorts #Interview #Boxing","C# interview,boxing unboxing,InvalidCastException,dotnet",2026-11-25 12:30,no,yes
+i14,interview,videos/i14_linq.mp4,"LINQ quiz: filter first, then Add(4). How many match?","C# quiz: LINQ is deferred. The query runs when you enumerate it, not when you write it. The recipe card analogy.
+
+Code compiled and run on .NET 8 (C# 12).
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.
+
+#CSharp #LINQ #DotNet #Shorts #Interview","C# interview,LINQ,deferred execution,dotnet,C# quiz",2026-11-25 17:30,no,yes
+i15,interview,videos/i15_finally.mp4,return 1 inside try: does finally still run? C# interview,"C# interview: finally always runs, even after a return. Hotel key analogy and the real output order.
+
+Code compiled and run on .NET 8 (C# 12).
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.
+
+#CSharp #DotNet #Shorts #Interview #Coding","C# interview,finally block,try catch finally,dotnet",2026-11-26 12:30,no,yes
+i16,interview,videos/i16_nplus1.mp4,Why is your API slow? The N+1 problem in 30 seconds,"Interview question: you loop over orders and load each customer. That is the N+1 problem: one query for the list, N for the details. Fix it with Include or a join.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.
+
+#DotNet #EntityFramework #Shorts #Interview #Performance","N+1 problem,Entity Framework,API performance,dotnet interview",2026-11-26 17:30,no,yes
+i17,interview,videos/i17_sqli.mp4,One quote broke the login: SQL injection explained,"Security interview: building SQL with string plus lets the input become code. Use parameters so input stays data. The code shown is illustrative.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.
+
+#SQL #Security #Shorts #Interview #SQLInjection","SQL injection,security interview,parameterized query,SQL",2026-11-27 12:30,no,yes
+i18,interview,videos/i18_pkuk.mp4,Primary key vs Unique key: the NULL trap (SQL Server),"SQL interview: a table has one primary key and it never allows NULL. A unique key can exist many times and SQL Server allows one NULL.
+
+Behaviour shown for SQL Server.
+
+Subscribe to Chai Dev | Interview Prep for one concept at a time. Instagram: @interview.chai
+
+AI-made explainer.
+
+#SQL #SQLServer #Shorts #Interview #Database","SQL interview,primary key vs unique key,SQL Server,database",2026-11-27 17:30,no,yes
+k09,kahani,videos/k09_birbal_murkh.mp4,Akbar ka naam murkhon ki list mein kyun tha? | Birbal ki kahani,"Birbal ne murkhon ki list banayi aur sabse upar Akbar ka naam likha. Kyun? Akbar-Birbal ki lok-katha.
+
+Katha / lok-katha ka ek prachalit roop.
+
+Roz ek nayi kahani. Subscribe karo: Kahaniyon Wali Raat. Instagram: @kahaniyon.wali.raat
+
+AI se bana animation.
+
+#Birbal #AkbarBirbal #Shorts #Kahani #HindiStories","Akbar Birbal,Birbal ki kahani,Hindi kahani,lok katha,moral story",2026-11-23 07:30,no,yes
+k10,kahani,videos/k10_birbal_kendra.mp4,Dharti ka kendra kahan hai? Birbal ka jawab,"Akbar ne poochha: dharti ka kendra kahan hai? Birbal ne zameen mein ek loha gaad diya. Akbar-Birbal ki lok-katha.
+
+Katha / lok-katha ka ek prachalit roop.
+
+Roz ek nayi kahani. Subscribe karo: Kahaniyon Wali Raat. Instagram: @kahaniyon.wali.raat
+
+AI se bana animation.
+
+#Birbal #AkbarBirbal #Shorts #Kahani #HindiStories","Akbar Birbal,Birbal ki kahani,Hindi kahani,lok katha,chatur Birbal",2026-11-23 19:00,no,yes
+k11,kahani,videos/k11_birbal_chor.mp4,Chor ki daadhi mein tinka: Birbal ne chor kaise pakda?,"Chor ki daadhi mein tinka. Ye kahawat kahan se aayi? Akbar-Birbal ki lok-katha.
+
+Katha / lok-katha ka ek prachalit roop.
+
+Roz ek nayi kahani. Subscribe karo: Kahaniyon Wali Raat. Instagram: @kahaniyon.wali.raat
+
+AI se bana animation.
+
+#Birbal #AkbarBirbal #Shorts #Kahani #HindiStories","Akbar Birbal,Birbal ki kahani,Hindi kahawat,lok katha,Hindi kahani",2026-11-24 07:30,no,yes
+k12,kahani,videos/k12_lakshman_rekha.mp4,Lakshman Rekha ki kahani: Sita ne rekha kyun paar ki?,"Lakshman Rekha ka matlab kya hai? Katha ka ek prachalit roop.
+
+Katha / lok-katha ka ek prachalit roop.
+
+Roz ek nayi kahani. Subscribe karo: Kahaniyon Wali Raat. Instagram: @kahaniyon.wali.raat
+
+AI se bana animation.
+
+#Ramayan #LakshmanRekha #Shorts #Kahani #HindiStories","Lakshman Rekha,Ramayan,Ramayan ki kahani,Hindi kahani,Sita Lakshman",2026-11-24 19:00,no,yes
+k13,kahani,videos/k13_ram_vachan.mp4,Ram ne vanvaas bina shikayat ke kyun maana?,"Rajyabhishek ke ek din pehle Ram ko vanvaas mila. Unhone pita ke vachan ki wajah se use maan liya. Ramayan ka prasang.
+
+Katha / lok-katha ka ek prachalit roop.
+
+Roz ek nayi kahani. Subscribe karo: Kahaniyon Wali Raat. Instagram: @kahaniyon.wali.raat
+
+AI se bana animation.
+
+#Ramayan #Ram #Shorts #Kahani #HindiStories","Ramayan,Ram vanvaas,Dasharath vachan,Hindi kahani,Ramayan ki kahani",2026-11-25 07:30,no,yes
+k14,kahani,videos/k14_arjun_moh.mp4,Jab saamne apne hi hon: Arjun ka sawaal,"Kurukshetra mein Arjun ne dhanush rakh diya. Krishna ne unhe kya samjhaya? Mahabharat aur Gita ka prasang.
+
+Katha / lok-katha ka ek prachalit roop.
+
+Roz ek nayi kahani. Subscribe karo: Kahaniyon Wali Raat. Instagram: @kahaniyon.wali.raat
+
+AI se bana animation.
+
+#Mahabharat #Gita #Shorts #Kahani #HindiStories","Mahabharat,Arjun Krishna,Bhagavad Gita,Gita gyaan,Hindi kahani",2026-11-25 19:00,no,yes
+k15,kahani,videos/k15_yudhi_kutta.mp4,Yudhishthir swarg ke dwar par kutte ke liye ruk gaye,"Mahaprasthan mein Yudhishthir ke saath sirf ek kutta bacha. Swarg ke dwar par unhone kya chuna? Mahabharat ka prasang.
+
+Katha / lok-katha ka ek prachalit roop.
+
+Roz ek nayi kahani. Subscribe karo: Kahaniyon Wali Raat. Instagram: @kahaniyon.wali.raat
+
+AI se bana animation.
+
+#Mahabharat #Yudhishthir #Shorts #Kahani #HindiStories","Mahabharat,Yudhishthir,Mahaprasthan,Dharmraj,Hindi kahani",2026-11-26 07:30,no,yes
+k16,kahani,videos/k16_lalchi_kutta.mp4,Kutte ne roti kyun kho di? Tum bhi ye karte ho?,"Lalach ki lok-katha: kutte ne paani mein apni parchhai dekhi aur apni roti kho di.
+
+Katha / lok-katha ka ek prachalit roop.
+
+Roz ek nayi kahani. Subscribe karo: Kahaniyon Wali Raat. Instagram: @kahaniyon.wali.raat
+
+AI se bana animation.
+
+#Kahani #MoralStory #Shorts #HindiStories #Lalach","lalach ki kahani,moral story,Hindi kahani,lok katha,kutta aur roti",2026-11-26 19:00,no,yes
+k17,kahani,videos/k17_sone_anda.mp4,Sone ka anda dene wali murgi ka kya hua?,"Lalach ki ek aur lok-katha: sone ka anda dene wali murgi.
+
+Katha / lok-katha ka ek prachalit roop.
+
+Roz ek nayi kahani. Subscribe karo: Kahaniyon Wali Raat. Instagram: @kahaniyon.wali.raat
+
+AI se bana animation.
+
+#Kahani #MoralStory #Shorts #HindiStories #Lalach","sone ka anda,murgi ki kahani,moral story,Hindi kahani,lalach",2026-11-27 07:30,no,yes
+k18,kahani,videos/k18_eklavya.mp4,Eklavya ne angootha kyun de diya?,"Eklavya ne guru dakshina mein apna angootha de diya. Is kahani par log alag alag sochte hain. Aap kya sochte ho? Mahabharat ka prasang.
+
+Katha / lok-katha ka ek prachalit roop.
+
+Roz ek nayi kahani. Subscribe karo: Kahaniyon Wali Raat. Instagram: @kahaniyon.wali.raat
+
+AI se bana animation.
+
+#Mahabharat #Eklavya #Shorts #Kahani #HindiStories","Mahabharat,Eklavya,Dronacharya,guru dakshina,Hindi kahani",2026-11-27 19:00,no,yes
+g06,gta,videos/g06_stream.mp4,How GTA-style open worlds load a city with no loading screen,"How can a huge open world run with no loading screen? The map is cut into squares, and only the ones near you are loaded.
+
+How games commonly work, shown with a simple animation. It is not official and no Rockstar code is shown.
+
+Follow for how games really work. Instagram: @bawaalmoments
+
+AI-made explainer.
+
+#Shorts #GTA6 #GameDev #HowGamesWork #GameDesign","GTA 6,open world,game development,how games work,loading screen",2026-11-23 15:00,no,yes
+g07,gta,videos/g07_traffic.mp4,Why game traffic never runs out (hundreds of cars),"Where do all the cars in an open-world city come from? Roads are a graph, and only cars near you are simulated.
+
+How games commonly work, shown with a simple animation. It is not official and no Rockstar code is shown.
+
+Follow for how games really work. Instagram: @bawaalmoments
+
+AI-made explainer.
+
+#Shorts #GTA6 #GameDev #HowGamesWork #GameDesign","GTA 6,game traffic AI,game development,how games work,open world",2026-11-23 21:00,no,yes
+g08,gta,videos/g08_collision.mp4,Why a 300 km/h car can't clip through a wall,"Tunneling: when a fast object skips a thin wall between two physics steps. The fix is to sweep the whole path.
+
+How games commonly work, shown with a simple animation. It is not official and no Rockstar code is shown.
+
+Follow for how games really work. Instagram: @bawaalmoments
+
+AI-made explainer.
+
+#Shorts #GTA6 #GameDev #HowGamesWork #GameDesign","GTA 6,game physics,collision detection,tunneling,game development",2026-11-24 15:00,no,yes
+g09,gta,videos/g09_culling.mp4,How games skip drawing most of the city,"Frustum and occlusion culling in a simple top-down demo: only what the camera can see gets drawn.
+
+How games commonly work, shown with a simple animation. It is not official and no Rockstar code is shown.
+
+Follow for how games really work. Instagram: @bawaalmoments
+
+AI-made explainer.
+
+#Shorts #GTA6 #GameDev #HowGamesWork #GameDesign","GTA 6,culling,game rendering,game development,how games work",2026-11-24 21:00,no,yes
+g10,gta,videos/g10_path.mp4,How NPCs find their way: pathfinding in 40 seconds,"Breadth-first search vs A star on a grid, with a new wall and a replan. The numbers shown are from this demo grid only.
+
+How games commonly work, shown with a simple animation. It is not official and no Rockstar code is shown.
+
+Follow for how games really work. Instagram: @bawaalmoments
+
+AI-made explainer.
+
+#Shorts #GTA6 #GameDev #HowGamesWork #GameDesign","GTA 6,pathfinding,A star,NPC AI,game development",2026-11-25 15:00,no,yes
+g11,gta,videos/g11_frame.mp4,16.7 ms: the budget every game frame lives inside,"At 60 FPS every frame gets about 16.7 milliseconds. Go over and you feel it as a stutter. The split shown is an example, not real numbers.
+
+How games commonly work, shown with a simple animation. It is not official and no Rockstar code is shown.
+
+Follow for how games really work. Instagram: @bawaalmoments
+
+AI-made explainer.
+
+#Shorts #GTA6 #GameDev #HowGamesWork #GameDesign","GTA 6,frame time,60 fps,game performance,game development",2026-11-25 21:00,no,yes
+g12,gta,videos/g12_lod.mp4,Why far cars look simpler: level of detail (LOD),"Level of detail: near objects use the detailed model, far ones a cheaper copy. Swap too early and you see the pop.
+
+How games commonly work, shown with a simple animation. It is not official and no Rockstar code is shown.
+
+Follow for how games really work. Instagram: @bawaalmoments
+
+AI-made explainer.
+
+#Shorts #GTA6 #GameDev #HowGamesWork #GameDesign","GTA 6,level of detail,LOD,game graphics,game development",2026-11-26 15:00,no,yes
+g13,gta,videos/g13_crowd.mp4,"1000 people, 5 characters: how game crowds are made","A crowd is a few base models remixed with colour, size and a random walk offset.
+
+How games commonly work, shown with a simple animation. It is not official and no Rockstar code is shown.
+
+Follow for how games really work. Instagram: @bawaalmoments
+
+AI-made explainer.
+
+#Shorts #GTA6 #GameDev #HowGamesWork #GameDesign","GTA 6,game crowd,NPC,game development,how games work",2026-11-26 21:00,no,yes
+g14,gta,videos/g14_sun.mp4,"In a game, the sun is just a number","Time of day is one number that sets the sun angle, the sky colour and every shadow.
+
+How games commonly work, shown with a simple animation. It is not official and no Rockstar code is shown.
+
+Follow for how games really work. Instagram: @bawaalmoments
+
+AI-made explainer.
+
+#Shorts #GTA6 #GameDev #HowGamesWork #GameDesign","GTA 6,day night cycle,game lighting,game development,how games work",2026-11-27 15:00,no,yes
+g15,gta,videos/g15_engine.mp4,Why a game engine sound is never one recording,"Engine audio in games is usually a few loops, pitch-shifted and crossfaded by RPM.
+
+How games commonly work, shown with a simple animation. It is not official and no Rockstar code is shown.
+
+Follow for how games really work. Instagram: @bawaalmoments
+
+AI-made explainer.
+
+#Shorts #GTA6 #GameDev #HowGamesWork #GameDesign","GTA 6,game audio,engine sound,game development,how games work",2026-11-27 21:00,no,yes

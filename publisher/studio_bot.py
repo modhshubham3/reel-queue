@@ -36,13 +36,44 @@ def send(text):
 def rows():
     f = WEEK / "queue.csv"
     return list(csv.DictReader(open(f, encoding="utf-8-sig"))) if f.exists() else []
+WEEK2 = HERE.parent / "week2"; Q2 = str(WEEK2 / "queue.csv")
+
+def get_week2():
+    """download week2/queue.csv and every video it lists from the public reel-queue repo (skips files already complete)"""
+    def work():
+        if not busy.acquire(blocking=False): send("Ek kaam pehle se chal raha hai, thoda ruko."); return
+        try:
+            send("▶ Week 2 download shuru...")
+            (WEEK2 / "videos").mkdir(parents=True, exist_ok=True)
+            r = requests.get(f"{RAW}/week2/queue.csv", timeout=60); r.raise_for_status(); (WEEK2 / "queue.csv").write_bytes(r.content)
+            rows2 = list(csv.DictReader(open(WEEK2 / "queue.csv", encoding="utf-8-sig"))); got = miss = 0; last = time.time()
+            for row in rows2:
+                dest = WEEK2 / row["file"].strip()
+                try:
+                    h = requests.head(f"{RAW}/week2/{row['file'].strip()}", timeout=60, allow_redirects=True)
+                    size = int(h.headers.get("Content-Length", 0))
+                    if dest.exists() and size and dest.stat().st_size == size: got += 1; continue
+                    with requests.get(f"{RAW}/week2/{row['file'].strip()}", stream=True, timeout=300) as rr:
+                        rr.raise_for_status()
+                        with open(dest, "wb") as fh:
+                            for chunk in rr.iter_content(1 << 20): fh.write(chunk)
+                    got += 1
+                except Exception as e:
+                    miss += 1; send(f"FAIL {row['id']}: {str(e)[:100]}")
+                if time.time() - last > 25: send(f"... {got}/{len(rows2)} videos aa chuke"); last = time.time()
+            send(f"✅ Week 2: {got}/{len(rows2)} videos laptop par hain" + (f", {miss} fail (/w2get dobara chalao)" if miss else ". Ab /yt2check phir /yt2upload."))
+        except Exception as e: send(f"Error: {e}")
+        finally: busy.release()
+    threading.Thread(target=work, daemon=True).start()
+
 def jload(p): return json.loads(p.read_text()) if p.exists() else {}
 
 def status():
     q = rows(); y = jload(HERE / "uploaded.json"); i = jload(HERE / "ig_uploaded.json")
     toks = [n for n in ("kahani", "interview", "gta") if (HERE / "tokens" / f"yt_{n}.json").exists()]
     pub = (HERE / "publora_key.txt").exists()
-    out = [f"Videos in queue: {len(q)} | YouTube uploaded: {len(y)} | Instagram scheduled: {len(i)}",
+    q2 = [r for r in csv.DictReader(open(WEEK2 / "queue.csv", encoding="utf-8-sig"))] if (WEEK2 / "queue.csv").exists() else []
+    out = [f"Videos in queue: {len(q)} (+{len(q2)} Week 2) | YouTube uploaded: {len(y)} | Instagram scheduled: {len(i)}",
            f"YouTube sign-ins: {', '.join(toks) or 'none'} | Publora key: {'yes' if pub else 'NO'}", "", "Next 6 by time (Y=YouTube, I=Instagram):"]
     for r in sorted(q, key=lambda r: r["publish_at"])[:40]:
         if r["id"] in y and r["id"] in i: continue
@@ -74,6 +105,8 @@ ACTIONS = {  # name -> (needs confirm, argv, label)
     "ytcheck": (False, ["yt_publish.py", Q, "--dry-run"], "YouTube check"),
     "yttest": (True, ["yt_publish.py", Q, "--only", "i1"], "YouTube test (i1)"),
     "ytupload": (True, ["yt_publish.py", Q], "YouTube poora hafta"),
+    "yt2check": (False, ["yt_publish.py", Q2, "--dry-run"], "YouTube Week 2 check"),
+    "yt2upload": (True, ["yt_publish.py", Q2], "YouTube Week 2 (30 videos, schedule ke saath)"),
     "ythash": (True, ["yt_hashtags.py", Q], "YouTube: purane videos mein hashtags"),
     "igcheck": (False, ["ig_publish.py", M, "--dry-run"], "Instagram check"),
     "igtest": (True, ["ig_publish.py", M, "--only", "i2"], "Instagram test (i2)"),
@@ -81,7 +114,7 @@ ACTIONS = {  # name -> (needs confirm, argv, label)
     "igfree": (True, ["ig_publish.py", M, "--lanes", "interview,kahani"], "Instagram free-plan (interview+kahani)"),
     "igall": (True, ["ig_publish.py", M], "Instagram poora hafta"),
 }
-HELP = ("Commands:\n/status  kya ho chuka, kya baaki\n/ytcheck  /yttest  /ytupload  /yt ID  (YouTube)\n/ythash  purane YouTube videos mein hashtags\n/igcheck  /igtest  /igfree  /igall  /ig ID  (Instagram schedule)\n/ignow ID  turant post (jaise /ignow i2)\n/igplan  plan ki limits dekho\n/igauto on|off  khud hi har 3 ghante mein agle video schedule karta rahe\n"
+HELP = ("Commands:\n/status  kya ho chuka, kya baaki\n/ytcheck  /yttest  /ytupload  /yt ID  (YouTube)\n/ythash  purane YouTube videos mein hashtags\n/w2get  /yt2check  /yt2upload  Week 2 ke 30 naye videos (download, check, upload)\n/igcheck  /igtest  /igfree  /igall  /ig ID  (Instagram schedule)\n/ignow ID  turant post (jaise /ignow i2)\n/igplan  plan ki limits dekho\n/igauto on|off  khud hi har 3 ghante mein agle video schedule karta rahe\n"
         "/update  naye scripts download\n/confirm  upload se pehle haan\n/cancel\nUpload wale commands pehle /confirm maangte hain.")
 
 AUTO = HERE / "auto.json"; kick = threading.Event()
@@ -127,6 +160,7 @@ def handle(text):
         p = pending.pop("p", None)
         if not p or time.time() > p[0]: send("Koi pending kaam nahi (ya 60 second beet gaye).")
         else: run(p[1], p[2])
+    elif cmd == "w2get": get_week2()
     elif cmd == "igauto":
         if arg.lower() == "on": set_auto(True); kick.set(); send("Auto Instagram ON. Abhi ek round chalega, phir har 3 ghante mein jo slot khaali hoga usme agla video schedule hoga. Kuch hone par yahin batayunga. Band: /igauto off")
         elif arg.lower() == "off": set_auto(False); send("Auto Instagram OFF.")
