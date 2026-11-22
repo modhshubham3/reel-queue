@@ -13,7 +13,7 @@ import requests
 HERE = Path(__file__).resolve().parent
 WEEK = HERE.parent / "week1"
 RAW = "https://raw.githubusercontent.com/modhshubham3/reel-queue/ccr-cb619668-8pcm8x"
-FILES = ("ig_publish.py", "yt_publish.py", "yt_auth.py", "studio_bot.py", "UPLOAD_MENU.bat", "UPDATE.bat", "run_studio_bot.bat")
+FILES = ("ig_publish.py", "yt_publish.py", "yt_hashtags.py", "yt_auth.py", "studio_bot.py", "UPLOAD_MENU.bat", "UPDATE.bat", "run_studio_bot.bat")
 
 def load_env():
     f = HERE / "bot.env"
@@ -74,13 +74,14 @@ ACTIONS = {  # name -> (needs confirm, argv, label)
     "ytcheck": (False, ["yt_publish.py", Q, "--dry-run"], "YouTube check"),
     "yttest": (True, ["yt_publish.py", Q, "--only", "i1"], "YouTube test (i1)"),
     "ytupload": (True, ["yt_publish.py", Q], "YouTube poora hafta"),
+    "ythash": (True, ["yt_hashtags.py", Q], "YouTube: purane videos mein hashtags"),
     "igcheck": (False, ["ig_publish.py", M, "--dry-run"], "Instagram check"),
     "igtest": (True, ["ig_publish.py", M, "--only", "i2"], "Instagram test (i2)"),
     "igplan": (False, ["ig_publish.py", M, "--plan"], "Instagram plan/limits"),
     "igfree": (True, ["ig_publish.py", M, "--lanes", "interview,kahani"], "Instagram free-plan (interview+kahani)"),
     "igall": (True, ["ig_publish.py", M], "Instagram poora hafta"),
 }
-HELP = ("Commands:\n/status  kya ho chuka, kya baaki\n/ytcheck  /yttest  /ytupload  /yt ID  (YouTube)\n/igcheck  /igtest  /igfree  /igall  /ig ID  (Instagram schedule)\n/ignow ID  turant post (jaise /ignow i2)\n/igplan  plan ki limits dekho\n/igauto on|off  khud hi har 3 ghante mein agle video schedule karta rahe\n"
+HELP = ("Commands:\n/status  kya ho chuka, kya baaki\n/ytcheck  /yttest  /ytupload  /yt ID  (YouTube)\n/ythash  purane YouTube videos mein hashtags\n/igcheck  /igtest  /igfree  /igall  /ig ID  (Instagram schedule)\n/ignow ID  turant post (jaise /ignow i2)\n/igplan  plan ki limits dekho\n/igauto on|off  khud hi har 3 ghante mein agle video schedule karta rahe\n"
         "/update  naye scripts download\n/confirm  upload se pehle haan\n/cancel\nUpload wale commands pehle /confirm maangte hain.")
 
 AUTO = HERE / "auto.json"; kick = threading.Event()

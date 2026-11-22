@@ -14,7 +14,7 @@ from pathlib import Path
 from google_auth_oauthlib.flow import InstalledAppFlow
 
 HERE = Path(__file__).resolve().parent
-SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
+SCOPES = ["https://www.googleapis.com/auth/youtube"]   # upload + edit (needed to add hashtags to existing videos)
 name = next((a for a in sys.argv[1:] if not a.startswith("--")), None)
 if not name: raise SystemExit("usage: python yt_auth.py <channel-name>   e.g. kahani | interview | gta")
 secret = HERE / "client_secret.json"

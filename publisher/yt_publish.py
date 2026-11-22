@@ -27,13 +27,24 @@ def clean(t):
     """YouTube rejects < and > in titles, descriptions and tags."""
     return t.replace("<", " less than ").replace(">", " greater than ").replace("  ", " ")
 
+def with_hashtags(desc, tags, title=""):
+    """Put 3-5 hashtags on the last line of the description (YouTube shows the first 3 above the title). Max 15 allowed."""
+    import re
+    if re.search(r"(^|\s)#\w", desc): return desc
+    want = [t for t in re.findall(r"#\w+", title)]
+    for t in tags:
+        h = "#" + re.sub(r"[^A-Za-z0-9_]", "", t.lower().replace("c#", "csharp ").replace(".net", "dotnet ").title().replace(" ", ""))
+        if len(h) > 2 and h not in want: want.append(h)
+    if "#Shorts" not in want: want.insert(0, "#Shorts")
+    return desc.rstrip() + "\n\n" + " ".join(want[:5])
+
 def yes(v, default): v = (v or "").strip().lower(); return default if not v else v in ("yes", "y", "true", "1")
 
 def body_for(r):
     when = datetime.strptime(r["publish_at"].strip(), "%Y-%m-%d %H:%M").replace(tzinfo=IST)
     tags = [t.strip() for t in (r.get("tags") or "").split(",") if t.strip()]
     return {
-        "snippet": {"title": clean(r["title"].strip())[:100], "description": clean(r["description"].strip())[:5000], "tags": [clean(t) for t in tags], "categoryId": CATEGORY.get(r["channel"].strip(), "22")},
+        "snippet": {"title": clean(r["title"].strip())[:100], "description": clean(with_hashtags(r["description"].strip(), tags, r["title"]))[:5000], "tags": [clean(t) for t in tags], "categoryId": CATEGORY.get(r["channel"].strip(), "22")},
         "status": {"privacyStatus": "private", "publishAt": when.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                    "selfDeclaredMadeForKids": yes(r.get("made_for_kids"), False), "containsSyntheticMedia": yes(r.get("synthetic"), True)},
     }, when
@@ -71,6 +82,7 @@ def main():
             except HttpError as e:
                 code = getattr(e.resp, "status", 0)
                 if code in (500, 502, 503, 504) and tries < 5: tries += 1; print(f"   server busy ({code}), retry {tries}/5"); time.sleep(5); continue
+                if "quotaExceeded" in str(e) or "uploadLimitExceeded" in str(e): print(f"   STOP: YouTube ki aaj ki upload limit khatam ({e.resp.status}). Baaki rows kal dobara chalao, ye apne aap wahin se aage badhega."); print(f"finished: {n} uploaded"); return
                 print(f"   FAILED {rid}: {e}"); failed = True; break
             except Exception as e:
                 if tries < 5: tries += 1; print(f"   network error, retry {tries}/5: {e}"); time.sleep(5); continue
