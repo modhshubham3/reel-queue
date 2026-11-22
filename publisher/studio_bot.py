@@ -114,7 +114,7 @@ ACTIONS = {  # name -> (needs confirm, argv, label)
     "igfree": (True, ["ig_publish.py", M, "--lanes", "interview,kahani"], "Instagram free-plan (interview+kahani)"),
     "igall": (True, ["ig_publish.py", M], "Instagram poora hafta"),
 }
-HELP = ("Commands:\n/status  kya ho chuka, kya baaki\n/ytcheck  /yttest  /ytupload  /yt ID  (YouTube)\n/ythash  purane YouTube videos mein hashtags\n/w2get  /yt2check  /yt2upload  Week 2 ke 30 naye videos (download, check, upload)\n/igcheck  /igtest  /igfree  /igall  /ig ID  (Instagram schedule)\n/ignow ID  turant post (jaise /ignow i2)\n/igplan  plan ki limits dekho\n/igauto on|off  khud hi har 3 ghante mein agle video schedule karta rahe\n"
+HELP = ("Commands:\n/status  kya ho chuka, kya baaki\n/ytcheck  /yttest  /ytupload  /yt ID  (YouTube)\n/ythash  purane YouTube videos mein hashtags\n/w2get  /yt2check  /yt2upload  Week 2 ke 30 naye videos (download, check, schedule)\n/yt2now  ya  /yt2now 2  turant public (2 = har channel ke agle 2)\n/igcheck  /igtest  /igfree  /igall  /ig ID  (Instagram schedule)\n/ignow ID  turant post (jaise /ignow i2)\n/igplan  plan ki limits dekho\n/igauto on|off  khud hi har 3 ghante mein agle video schedule karta rahe\n"
         "/update  naye scripts download\n/confirm  upload se pehle haan\n/cancel\nUpload wale commands pehle /confirm maangte hain.")
 
 AUTO = HERE / "auto.json"; kick = threading.Event()
@@ -161,6 +161,9 @@ def handle(text):
         if not p or time.time() > p[0]: send("Koi pending kaam nahi (ya 60 second beet gaye).")
         else: run(p[1], p[2])
     elif cmd == "w2get": get_week2()
+    elif cmd == "yt2now":
+        argv = ["yt_publish.py", Q2, "--now"] + (["--per-channel", arg] if arg.isdigit() else []); pending["p"] = (time.time() + 60, argv, "YouTube Week 2 TURANT PUBLIC")
+        send("YouTube Week 2: " + (f"har channel ke agle {arg} video" if arg.isdigit() else "saare baaki video") + " abhi PUBLIC hoge (schedule nahi).\nHaan ke liye /confirm (60 second). Nahi ke liye /cancel.")
     elif cmd == "igauto":
         if arg.lower() == "on": set_auto(True); kick.set(); send("Auto Instagram ON. Abhi ek round chalega, phir har 3 ghante mein jo slot khaali hoga usme agla video schedule hoga. Kuch hone par yahin batayunga. Band: /igauto off")
         elif arg.lower() == "off": set_auto(False); send("Auto Instagram OFF.")

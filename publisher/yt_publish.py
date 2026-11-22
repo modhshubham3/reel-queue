@@ -4,6 +4,8 @@
   python yt_publish.py queue.csv --dry-run     show what would happen (nothing is uploaded)
   python yt_publish.py queue.csv               upload everything not uploaded yet
   python yt_publish.py queue.csv --only g03    upload only rows whose 'id' contains 'g03'
+  python yt_publish.py queue.csv --now         upload and make PUBLIC IMMEDIATELY (ignores publish_at)
+  python yt_publish.py queue.csv --now --per-channel 2   same, but only the next 2 videos per channel in this run
 
 queue.csv columns: id, channel, file, title, description, tags, publish_at, made_for_kids, synthetic
   channel      = kahani | interview | gta   (needs tokens/yt_<channel>.json from yt_auth.py)
@@ -40,12 +42,12 @@ def with_hashtags(desc, tags, title=""):
 
 def yes(v, default): v = (v or "").strip().lower(); return default if not v else v in ("yes", "y", "true", "1")
 
-def body_for(r):
+def body_for(r, now=False):
     when = datetime.strptime(r["publish_at"].strip(), "%Y-%m-%d %H:%M").replace(tzinfo=IST)
     tags = [t.strip() for t in (r.get("tags") or "").split(",") if t.strip()]
     return {
         "snippet": {"title": clean(r["title"].strip())[:100], "description": clean(with_hashtags(r["description"].strip(), tags, r["title"]))[:5000], "tags": [clean(t) for t in tags], "categoryId": CATEGORY.get(r["channel"].strip(), "22")},
-        "status": {"privacyStatus": "private", "publishAt": when.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+        "status": {**({"privacyStatus": "public"} if now else {"privacyStatus": "private", "publishAt": when.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")}),
                    "selfDeclaredMadeForKids": yes(r.get("made_for_kids"), False), "containsSyntheticMedia": yes(r.get("synthetic"), True)},
     }, when
 
@@ -62,15 +64,19 @@ def main():
     if not args: raise SystemExit(__doc__)
     q = Path(args[0]); rows = list(csv.DictReader(open(q, encoding="utf-8-sig")))
     now = datetime.now(IST); n = 0
+    go = "--now" in sys.argv
+    per = int(sys.argv[sys.argv.index("--per-channel") + 1]) if "--per-channel" in sys.argv else None; cnt = {}
     for r in rows:
         rid = r["id"].strip()
         if only and only not in rid: continue
         if rid in done: print(f"skip   {rid}: already uploaded ({done[rid]})"); continue
         f = (q.parent / r["file"].strip()).resolve()
         if not f.exists(): print(f"ERROR  {rid}: file not found: {f}"); continue
-        body, when = body_for(r)
+        ch = r["channel"].strip()
+        if per is not None and cnt.get(ch, 0) >= per: continue
+        body, when = body_for(r, go)
         warn = "  !! publish_at is in the past: it would go public IMMEDIATELY" if when <= now else ""
-        print(f"{'plan ' if dry else 'upload'} {rid}: [{r['channel']}] {body['snippet']['title']!r}  at {when:%Y-%m-%d %H:%M} IST  kids={body['status']['selfDeclaredMadeForKids']} synthetic={body['status']['containsSyntheticMedia']}{warn}")
+        print(f"{'plan ' if dry else 'upload'} {rid}: [{r['channel']}] {body['snippet']['title']!r}  at {'NOW (public immediately)' if go else when.strftime('%Y-%m-%d %H:%M') + ' IST'}  kids={body['status']['selfDeclaredMadeForKids']} synthetic={body['status']['containsSyntheticMedia']}{warn}")
         if dry: continue
         from googleapiclient.http import MediaFileUpload
         yt = service(r["channel"].strip())
@@ -88,8 +94,8 @@ def main():
                 if tries < 5: tries += 1; print(f"   network error, retry {tries}/5: {e}"); time.sleep(5); continue
                 print(f"   FAILED {rid}: {e}"); failed = True; break
         if failed: continue
-        done[rid] = resp["id"]; done_path.write_text(json.dumps(done, indent=1)); n += 1
-        print(f"   OK https://www.youtube.com/watch?v={resp['id']}  (private now, goes public at {when:%H:%M} IST)")
+        done[rid] = resp["id"]; done_path.write_text(json.dumps(done, indent=1)); n += 1; cnt[ch] = cnt.get(ch, 0) + 1
+        print(f"   OK https://www.youtube.com/watch?v={resp['id']}  " + ("(PUBLIC now)" if go else f"(private now, goes public at {when:%H:%M} IST)"))
     print(f"finished: {n} uploaded" + (" (dry run, nothing sent)" if dry else ""))
 
 if __name__ == "__main__": main()
