@@ -58,6 +58,7 @@ def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     dry = "--dry-run" in sys.argv; go = "--now" in sys.argv; only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else None
     lanes = sys.argv[sys.argv.index("--lanes") + 1].split(",") if "--lanes" in sys.argv else None   # e.g. interview,kahani
+    mx_new = int(sys.argv[sys.argv.index("--max") + 1]) if "--max" in sys.argv else None              # e.g. --now --max 2: post only the next 2 new ones
     if not args: raise SystemExit(__doc__)
     meta_path = Path(args[0]).resolve(); base = meta_path.parent
     rows = json.loads(meta_path.read_text(encoding="utf-8")); now = datetime.now(IST)
@@ -83,7 +84,8 @@ def main():
         rid = v["id"]
         if only and only not in rid: continue
         if lanes and v["lane"] not in lanes: continue
-        if rid in done and go and not dry:
+        if mx_new is not None and n >= mx_new: print(f"   max {mx_new} reached for this run"); break
+        if rid in done and go and not dry and only:   # only for one named video: a bulk --now must never re-publish everything already scheduled
             try:   # already uploaded/scheduled earlier -> publish that same post immediately (docs: update-post publishNow)
                 call("PUT", f"/update-post/{done[rid]}", key, json={"publishNow": True}, headers={"Idempotency-Key": f"w1-{rid}-now"})
                 print(f"   OK {rid}: abhi publish ho raha hai (postGroupId {done[rid]}). 1-2 minute mein Instagram par aayega."); n += 1
