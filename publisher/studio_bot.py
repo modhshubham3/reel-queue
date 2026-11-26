@@ -48,7 +48,8 @@ WEEK3 = HERE.parent / "week3"; Q3 = str(WEEK3 / "queue.csv")
 Q = str(WEEK / "queue.csv"); M = str(WEEK / "meta.json")
 WEEK4 = HERE.parent / "week4"; Q4 = str(WEEK4 / "queue.csv")
 WEEK5 = HERE.parent / "week5"; Q5 = str(WEEK5 / "queue.csv")
-WEEKS = {"1": ("Week 1", Q), "2": ("Week 2", Q2), "3": ("Week 3", Q3), "4": ("Week 4", Q4), "5": ("Week 5 (v2)", Q5)}
+WEEK6 = HERE.parent / "week6"; Q6 = str(WEEK6 / "queue.csv")
+WEEKS = {"1": ("Week 1", Q), "2": ("Week 2", Q2), "3": ("Week 3", Q3), "4": ("Week 4", Q4), "5": ("Week 5 (v2)", Q5), "6": ("Week 6 (lambi kahani)", Q6)}
 
 # ---------------------------------------------------------------- sending videos to the phone
 def send_video(path, caption=""):
@@ -271,7 +272,7 @@ def status():
     toks = [n for n in CHANNELS if (HERE / "tokens" / f"yt_{n}.json").exists()]
     out = ["📊 STATUS", "", "YouTube (upload ho gaye / kul):"]
     todo = []
-    for n in ("1", "2", "3", "4", "5"):
+    for n in ("1", "2", "3", "4", "5", "6"):
         p = week_progress(n)
         if p is None: out.append(f" {WEEKS[n][0]}: queue file nahi mili"); continue
         d, t, per = p
@@ -284,7 +285,7 @@ def status():
     out += ["", f"Instagram schedule hue: {len(i)}",
             f"YouTube sign-in: {', '.join(CH_LABEL[t] for t in toks) or 'koi nahi'}" + ("" if len(toks) == 3 else "  ⚠ baaki channels ka sign-in chahiye (yt_auth.py)"),
             f"Publora key: {'haan' if (HERE / 'publora_key.txt').exists() else 'NAHI'}", ""]
-    nxt = next((t for t in todo if t[0] == "5"), todo[-1] if todo else None)    # the new v2 week first
+    nxt = next((t for t in todo if t[0] == "5"), next((t for t in todo if t[0] == "6"), todo[-1] if todo else None))    # oldest unfinished v2 week first
     out.append("👉 Agla kaam: " + (f"{WEEKS[nxt[0]][0]} ke {nxt[1]} video baaki hain. YouTube ▶ {WEEKS[nxt[0]][0]} dabao." if nxt else "YouTube par kuch baaki nahi."))
     out.append("ℹ️ Week 3 ke Interview/Kahani YouTube ki upload limit se ruke hain (channel phone-verify karo). Week 4 purane style ka hai.")
     return "\n".join(out)
@@ -342,6 +343,8 @@ ACTIONS = {  # name -> (needs confirm, argv, label)
     "yt4upload": (True, ["yt_publish.py", Q4], "YouTube Week 4 upload (schedule ke saath)"),
     "yt5check": (False, ["yt_publish.py", Q5, "--dry-run"], "YouTube Week 5 check"),
     "yt5upload": (True, ["yt_publish.py", Q5], "YouTube Week 5 upload (schedule ke saath)"),
+    "yt6check": (False, ["yt_publish.py", Q6, "--dry-run"], "YouTube Week 6 check"),
+    "yt6upload": (True, ["yt_publish.py", Q6], "YouTube Week 6 upload (schedule ke saath)"),
     "ythash": (True, ["yt_hashtags.py", Q], "YouTube: purane videos mein hashtags"),
     "igcheck": (False, ["ig_publish.py", M, "--dry-run"], "Instagram check"),
     "igtest": (True, ["ig_publish.py", M, "--only", "i2"], "Instagram test (i2)"),
@@ -355,6 +358,7 @@ EXPLAIN = {  # one plain sentence shown before the Haan/Nahi question
     "yt2upload": "Week 2 ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge.",
     "yt3upload": "Week 3 ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge (28 Nov se 2 Dec). Jo ho chuke wo dobara nahi jayenge.",
     "yt5upload": "Week 5 (naye v2 style) ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge. Jo ho chuke wo dobara nahi jayenge.",
+    "yt6upload": "Week 6 (lambi kahani style, 13-17 Dec) ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge. Jo ho chuke wo dobara nahi jayenge.",
     "yt4upload": "Week 4 ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge (3 Dec se 7 Dec). Jo ho chuke wo dobara nahi jayenge.",
     "ythash": "Purane YouTube videos ke description mein hashtags jode jayenge.",
     "igtest": "Sirf test: Instagram par ek video (i2).",
@@ -372,7 +376,7 @@ def show_menu(prefix=""):
          [[("📊 Status: kya ho chuka", "/status")], [("▶️ YouTube upload", "/youtube")], [("📸 Instagram", "/instagram")], [("⚙️ Aur options", "/more")]])
 
 def show_youtube():
-    send("YouTube: kaunsa week?\n(Week 5 = naye v2 style ke 30 videos | Week 4 = purana style | Week 3 = 28 Nov - 2 Dec)", [[("⭐ Week 5 (v2, 30)", "/week 5")], [("Week 4 (30)", "/week 4")], [("Week 3 (30)", "/week 3")], [("Week 2 (30)", "/week 2"), ("Week 1 (21)", "/week 1")], [b_menu()[0]]])
+    send("YouTube: kaunsa week?\n(Week 6 = naya lamba storyteller style, 13-17 Dec | Week 5 = v2 style, 8-12 Dec | Week 4 = purana style)", [[("🆕 Week 6 (lambi, 30)", "/week 6"), ("⭐ Week 5 (v2, 30)", "/week 5")], [("Week 4 (30)", "/week 4")], [("Week 3 (30)", "/week 3")], [("Week 2 (30)", "/week 2"), ("Week 1 (21)", "/week 1")], [b_menu()[0]]])
 
 def show_week(n):
     if n not in WEEKS: return show_youtube()
