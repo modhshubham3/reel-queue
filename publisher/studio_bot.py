@@ -13,7 +13,7 @@ import requests
 HERE = Path(__file__).resolve().parent
 WEEK = HERE.parent / "week1"
 RAW = "https://raw.githubusercontent.com/modhshubham3/reel-queue/ccr-cb619668-8pcm8x"
-FILES = ("ig_publish.py", "yt_publish.py", "yt_hashtags.py", "yt_auth.py", "yt_make_public.py", "studio_bot.py", "UPLOAD_MENU.bat", "UPDATE.bat", "run_studio_bot.bat")
+FILES = ("ig_publish.py", "yt_publish.py", "yt_hashtags.py", "yt_auth.py", "yt_make_public.py", "yt_stats.py", "studio_bot.py", "UPLOAD_MENU.bat", "UPDATE.bat", "run_studio_bot.bat")
 CONFIRM_SECONDS = 120
 
 def load_env():
@@ -49,7 +49,8 @@ Q = str(WEEK / "queue.csv"); M = str(WEEK / "meta.json")
 WEEK4 = HERE.parent / "week4"; Q4 = str(WEEK4 / "queue.csv")
 WEEK5 = HERE.parent / "week5"; Q5 = str(WEEK5 / "queue.csv")
 WEEK6 = HERE.parent / "week6"; Q6 = str(WEEK6 / "queue.csv")
-WEEKS = {"1": ("Week 1", Q), "2": ("Week 2", Q2), "3": ("Week 3", Q3), "4": ("Week 4", Q4), "5": ("Week 5 (v2)", Q5), "6": ("Week 6 (lambi kahani)", Q6)}
+WEEK7 = HERE.parent / "week7"; Q7 = str(WEEK7 / "queue.csv")
+WEEKS = {"1": ("Week 1", Q), "2": ("Week 2", Q2), "3": ("Week 3", Q3), "4": ("Week 4", Q4), "5": ("Week 5 (v2)", Q5), "6": ("Week 6 (lambi kahani)", Q6), "7": ("Week 7 (Shorts parts)", Q7)}
 
 # ---------------------------------------------------------------- sending videos to the phone
 def send_video(path, caption=""):
@@ -124,33 +125,36 @@ def qrows(path):
     return list(csv.DictReader(open(p, encoding="utf-8-sig"))) if p.exists() else []
 def jload(p): return json.loads(p.read_text()) if p.exists() else {}
 
-def get_week2():
-    """download week2/queue.csv and every video it lists from the public reel-queue repo (skips files already complete)"""
+def get_week(n):
+    """download weekN/queue.csv and every video it lists from the public reel-queue repo (skips files already complete)"""
+    W = HERE.parent / f"week{n}"
     def work():
         if not busy.acquire(blocking=False): send("Ek kaam pehle se chal raha hai, thoda ruko."); return
         try:
-            send("▶ Week 2 download shuru...")
-            (WEEK2 / "videos").mkdir(parents=True, exist_ok=True)
-            r = requests.get(f"{RAW}/week2/queue.csv", timeout=60); r.raise_for_status(); (WEEK2 / "queue.csv").write_bytes(r.content)
-            rows2 = list(csv.DictReader(open(WEEK2 / "queue.csv", encoding="utf-8-sig"))); got = miss = 0; last = time.time()
-            for row in rows2:
-                dest = WEEK2 / row["file"].strip()
+            send(f"▶ Week {n} download shuru...")
+            (W / "videos").mkdir(parents=True, exist_ok=True)
+            r = requests.get(f"{RAW}/week{n}/queue.csv", timeout=60); r.raise_for_status(); (W / "queue.csv").write_bytes(r.content)
+            rows_ = list(csv.DictReader(open(W / "queue.csv", encoding="utf-8-sig"))); got = miss = 0; last = time.time()
+            for row in rows_:
+                dest = W / row["file"].strip()
                 try:
-                    h = requests.head(f"{RAW}/week2/{row['file'].strip()}", timeout=60, allow_redirects=True)
+                    h = requests.head(f"{RAW}/week{n}/{row['file'].strip()}", timeout=60, allow_redirects=True)
                     size = int(h.headers.get("Content-Length", 0))
                     if dest.exists() and size and dest.stat().st_size == size: got += 1; continue
-                    with requests.get(f"{RAW}/week2/{row['file'].strip()}", stream=True, timeout=300) as rr:
+                    with requests.get(f"{RAW}/week{n}/{row['file'].strip()}", stream=True, timeout=300) as rr:
                         rr.raise_for_status()
                         with open(dest, "wb") as fh:
                             for chunk in rr.iter_content(1 << 20): fh.write(chunk)
                     got += 1
                 except Exception as e:
                     miss += 1; send(f"FAIL {row['id']}: {str(e)[:100]}")
-                if time.time() - last > 25: send(f"... {got}/{len(rows2)} videos aa chuke"); last = time.time()
-            send(f"✅ Week 2: {got}/{len(rows2)} videos laptop par hain" + (f", {miss} fail (dobara dabao)" if miss else ". Ab YouTube ▶ Week 2 se check aur upload."), [[("▶️ YouTube", "/youtube"), ("🏠 Menu", "/menu")]])
+                if time.time() - last > 25: send(f"... {got}/{len(rows_)} videos aa chuke"); last = time.time()
+            send(f"✅ Week {n}: {got}/{len(rows_)} videos laptop par hain" + (f", {miss} fail (dobara dabao)" if miss else f". Ab YouTube ▶ Week {n} se check aur upload."), [[("▶️ YouTube", "/youtube"), ("🏠 Menu", "/menu")]])
         except Exception as e: send(f"Error: {e}")
         finally: busy.release()
     threading.Thread(target=work, daemon=True).start()
+
+def get_week2(): get_week("2")
 
 # ---------------------------------------------------------------- Instagram MANUAL flow: pick channel + count -> video + caption + first comment -> you post -> tap Done
 IG_CTA = {"interview": "Follow @interview.chai for C# and SQL explained simply ☕", "kahani": "Roz ek nayi kahani 🌙 Follow @kahaniyon.wali.raat", "gta": "Follow @bawaalmoments for how games really work 🎮"}
@@ -257,6 +261,78 @@ def ig_list(ch):
     send(f"{CH_LABEL.get(ch, ch)}: Instagram par baaki {len(rows)}\n\n" + "\n".join(f"{r['id'].strip()} · {clean_title(r)[:55]}" for r in rows[:40]) + ("\n..." if len(rows) > 40 else ""),
          [[("📲 Bhejo", f"/igman {ch}"), ("⬅️ Wapas", "/igman")]])
 
+# ---------------------------------------------------------------- Friday bridge: the Friday phone app <-> this bot, through ntfy.sh (no open ports, no accounts)
+# Phone reads  <topic>-status  (counts + real YouTube numbers, no secrets) and writes  <topic>-cmd  (signed commands from a SAFE list).
+# Topic + secret are made once, kept in bot.env, and shown only in your private Telegram chat as a pairing code ( /friday ).
+# Commands never upload anything: uploads still need the Haan/Nahi button in Telegram. Replies to a command appear in Telegram.
+import hashlib, hmac, secrets
+BRIDGE_HOST = os.environ.get("BRIDGE_HOST", "https://ntfy.sh").rstrip("/")
+BRIDGE_SAFE = re.compile(r"^/?(status|menu|stats|igman( (interview|kahani|gta))?|igsend (interview|kahani|gta) \d{1,2}|iglist (interview|kahani|gta)|igdone [\w, ]{1,80}|igundo [\w ]{1,40}|watch [1-7] (interview|kahani|gta)|week [1-7]|ytcheck|yt[2-7]check|ytpubcheck [1-7])$")
+BSEEN = HERE / "bridge_seen.json"
+
+def bridge_conf():
+    """-> (topic, secret); created and saved to bot.env the first time"""
+    if not os.environ.get("BRIDGE_TOPIC") or not os.environ.get("BRIDGE_SECRET"):
+        t, k = "friday-" + secrets.token_urlsafe(18).replace("_", "x").replace("-", "y"), secrets.token_hex(16)
+        with open(HERE / "bot.env", "a", encoding="utf-8") as f: f.write(f"\nBRIDGE_TOPIC={t}\nBRIDGE_SECRET={k}\n")
+        os.environ["BRIDGE_TOPIC"], os.environ["BRIDGE_SECRET"] = t, k
+    return os.environ["BRIDGE_TOPIC"], os.environ["BRIDGE_SECRET"]
+
+def bridge_pairing():
+    t, k = bridge_conf()
+    send("🔗 Friday app pairing\nApp mein: Settings > Studio > ye poori line paste karo (sirf tumhare liye, kisi ko mat dena):\n\n" + f"friday-pair:{t}:{k}" +
+         "\n\nIske baad Friday se bolo: 'studio ka status batao'. Bot apni taraf se har ~2 minute mein status bhejta hai, aur app ke hukum sirf ek safe list se chalte hain (upload kabhi nahi).", [b_menu()])
+
+def sign(secret, mid, ts, cmd): return hmac.new(secret.encode(), f"{mid}|{ts}|{cmd}".encode(), hashlib.sha256).hexdigest()
+
+def bridge_status():
+    c = ig_counts(); weeks = {}
+    for n in WEEKS:
+        pr = week_progress(n)
+        if pr: weeks[n] = {"name": WEEKS[n][0], "yt": pr[0], "total": pr[1]}
+    st = jload(HERE / "yt_stats.json"); ch = st.get("channels", {})
+    return {"v": 1, "ts": int(time.time()), "at": datetime.now().strftime("%Y-%m-%d %H:%M"), "weeks": weeks,
+            "ig": {n: {"yt": c[n][0], "ig": c[n][1], "left": c[n][2]} for n in CHANNELS}, "auto_ig": auto_on(), "busy": busy.locked(),
+            "stats_at": st.get("at"), "stats": {n: {k: ch[n][k] for k in ("uploaded", "public", "views", "avg_views", "zero_view_public", "comments", "top") if k in ch[n]} for n in ch}}
+
+def bridge_loop():
+    """every ~2 min: publish the status; every ~20 s: look for signed commands from the phone"""
+    topic, secret = bridge_conf(); seen = set(jload(BSEEN).get("ids", [])); last_pub = 0.0; since = "5m"
+    while True:
+        try:
+            if time.time() - last_pub > 120:
+                body = json.dumps(bridge_status(), ensure_ascii=False, separators=(",", ":"))
+                requests.post(f"{BRIDGE_HOST}/{topic}-status", data=body.encode("utf-8"), headers={"Cache": "yes", "Title": "studio-status"}, timeout=20); last_pub = time.time()
+            r = requests.get(f"{BRIDGE_HOST}/{topic}-cmd/json", params={"poll": "1", "since": since}, timeout=30)
+            for line in r.text.splitlines():
+                try: ev = json.loads(line)
+                except Exception: continue
+                if ev.get("event") != "message": continue
+                since = ev.get("id", since)
+                try: c = json.loads(ev.get("message", ""))
+                except Exception: continue
+                mid, ts, cmd, sig = str(c.get("id", "")), int(c.get("ts", 0)), str(c.get("cmd", "")).strip(), str(c.get("sig", ""))
+                ok = bool(mid) and mid not in seen and abs(time.time() - ts) < 600 and hmac.compare_digest(sig, sign(secret, mid, ts, cmd)) and bool(BRIDGE_SAFE.match(cmd))
+                if mid: seen.add(mid); BSEEN.write_text(json.dumps({"ids": sorted(seen)[-300:]}))
+                msg = "ok" if ok else "refused (signature, time, repeat or not on the safe list)"
+                log(f"bridge cmd {cmd[:40]}: {msg}")
+                try: requests.post(f"{BRIDGE_HOST}/{topic}-ack", data=json.dumps({"id": mid, "ok": ok, "msg": msg}).encode(), timeout=15)
+                except Exception: pass
+                if ok:
+                    send(f"🤖 Friday app ne bheja: {cmd}"); handle(cmd if cmd.startswith("/") else "/" + cmd); last_pub = 0.0
+        except Exception as e: log(f"bridge error: {str(e)[:120]}")
+        time.sleep(20)
+
+def stats_loop():
+    """real YouTube numbers every 3 hours (read-only, ~a few quota units); also on /stats"""
+    time.sleep(90)
+    while True:
+        try:
+            if (HERE / "tokens").exists():
+                subprocess.run([sys.executable, str(HERE / "yt_stats.py")], cwd=HERE, capture_output=True, timeout=600, env={**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"})
+        except Exception as e: log(f"stats error: {str(e)[:100]}")
+        time.sleep(3 * 3600)
+
 # ---------------------------------------------------------------- status
 def week_progress(n):
     """-> (done, total, {channel: (done, total)}) for one week's YouTube queue, or None if its queue.csv is missing"""
@@ -272,7 +348,7 @@ def status():
     toks = [n for n in CHANNELS if (HERE / "tokens" / f"yt_{n}.json").exists()]
     out = ["📊 STATUS", "", "YouTube (upload ho gaye / kul):"]
     todo = []
-    for n in ("1", "2", "3", "4", "5", "6"):
+    for n in ("1", "2", "3", "4", "5", "6", "7"):
         p = week_progress(n)
         if p is None: out.append(f" {WEEKS[n][0]}: queue file nahi mili"); continue
         d, t, per = p
@@ -345,6 +421,9 @@ ACTIONS = {  # name -> (needs confirm, argv, label)
     "yt5upload": (True, ["yt_publish.py", Q5], "YouTube Week 5 upload (schedule ke saath)"),
     "yt6check": (False, ["yt_publish.py", Q6, "--dry-run"], "YouTube Week 6 check"),
     "yt6upload": (True, ["yt_publish.py", Q6], "YouTube Week 6 upload (schedule ke saath)"),
+    "yt7check": (False, ["yt_publish.py", Q7, "--dry-run"], "YouTube Week 7 check"),
+    "yt7upload": (True, ["yt_publish.py", Q7], "YouTube Week 7 upload (schedule ke saath)"),
+    "stats": (False, ["yt_stats.py"], "YouTube numbers (views, likes, comments)"),
     "ythash": (True, ["yt_hashtags.py", Q], "YouTube: purane videos mein hashtags"),
     "igcheck": (False, ["ig_publish.py", M, "--dry-run"], "Instagram check"),
     "igtest": (True, ["ig_publish.py", M, "--only", "i2"], "Instagram test (i2)"),
@@ -358,6 +437,7 @@ EXPLAIN = {  # one plain sentence shown before the Haan/Nahi question
     "yt2upload": "Week 2 ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge.",
     "yt3upload": "Week 3 ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge (28 Nov se 2 Dec). Jo ho chuke wo dobara nahi jayenge.",
     "yt5upload": "Week 5 (naye v2 style) ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge. Jo ho chuke wo dobara nahi jayenge.",
+    "yt7upload": "Week 7 (3 kahaniyon ke 4-4 Shorts parts, 29 Nov) ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge. YouTube ka upload quota ~6 video/din hai: quota khatam ho to kal dobara dabao, jo ho chuke wo dobara nahi jayenge.",
     "yt6upload": "Week 6 (lambi kahani style, 13-17 Dec) ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge. Jo ho chuke wo dobara nahi jayenge.",
     "yt4upload": "Week 4 ke jo video abhi YouTube par nahi gaye, wo schedule hoke upload honge (3 Dec se 7 Dec). Jo ho chuke wo dobara nahi jayenge.",
     "ythash": "Purane YouTube videos ke description mein hashtags jode jayenge.",
@@ -376,7 +456,7 @@ def show_menu(prefix=""):
          [[("📊 Status: kya ho chuka", "/status")], [("▶️ YouTube upload", "/youtube")], [("📸 Instagram", "/instagram")], [("⚙️ Aur options", "/more")]])
 
 def show_youtube():
-    send("YouTube: kaunsa week?\n(Week 6 = naya lamba storyteller style, 13-17 Dec | Week 5 = v2 style, 8-12 Dec | Week 4 = purana style)", [[("🆕 Week 6 (lambi, 30)", "/week 6"), ("⭐ Week 5 (v2, 30)", "/week 5")], [("Week 4 (30)", "/week 4")], [("Week 3 (30)", "/week 3")], [("Week 2 (30)", "/week 2"), ("Week 1 (21)", "/week 1")], [b_menu()[0]]])
+    send("YouTube: kaunsa week?\n(Week 6 = naya lamba storyteller style, 13-17 Dec | Week 5 = v2 style, 8-12 Dec | Week 4 = purana style)", [[("🧩 Week 7 (Shorts parts, 12)", "/week 7")], [("🆕 Week 6 (lambi, 30)", "/week 6"), ("⭐ Week 5 (v2, 30)", "/week 5")], [("Week 4 (30)", "/week 4")], [("Week 3 (30)", "/week 3")], [("Week 2 (30)", "/week 2"), ("Week 1 (21)", "/week 1")], [b_menu()[0]]])
 
 def show_week(n):
     if n not in WEEKS: return show_youtube()
@@ -399,12 +479,12 @@ def show_instagram():
           [("🤖 Auto ON", "/igauto on"), ("Auto OFF", "/igauto off")], [b_menu()[0]]])
 
 def show_more():
-    send("Aur options:", [[("🔄 Naye scripts download (/update)", "/update")], [("⬇️ Week 2 videos download", "/w2get")], [("🏷️ Purane YouTube videos mein hashtags", "/ythash")], [("❌ Cancel", "/cancel"), b_menu()[0]]])
+    send("Aur options:", [[("🔄 Naye scripts download (/update)", "/update")], [("⬇️ Week 7 videos download", "/w7get")], [("📈 YouTube numbers (stats)", "/stats")], [("🔗 Friday app pairing", "/friday")], [("⬇️ Week 2 videos download", "/w2get")], [("🏷️ Purane YouTube videos mein hashtags", "/ythash")], [("❌ Cancel", "/cancel"), b_menu()[0]]])
 
 HELP = ("Bas /menu bhejo aur button dabao. Kuch type karne ki zaroorat nahi.\n\n"
         "Short list:\n/menu  main buttons\n/status  kya ho chuka, kya baaki\n/youtube  YouTube upload (week chuno)\n/instagram  Instagram\n/more  aur options\n/cancel  rok do\n\n"
         "Purane commands bhi chalte hain: /yt3check /yt3upload /yt3 ID /yt2upload /ytcheck /igcheck /update ...\n\nInstagram haath se: /igman (channel + kitne videos), /igdone ID (post ho gaya), /igundo ID, /iglist kahani")
-KNOWN = set(ACTIONS) | {"menu", "status", "youtube", "instagram", "more", "help", "start", "update", "cancel", "confirm", "w2get", "yt2now", "igauto", "ignow", "yt3", "yt", "ig", "week", "ytch", "ytpub", "ytpubcheck", "watch", "igpost", "igman", "igsend", "igdone", "igdoneall", "igundo", "iglist"}
+KNOWN = set(ACTIONS) | {"menu", "status", "youtube", "instagram", "more", "help", "start", "update", "cancel", "confirm", "w2get", "w7get", "friday", "yt2now", "igauto", "ignow", "yt3", "yt", "ig", "week", "ytch", "ytpub", "ytpubcheck", "watch", "igpost", "igman", "igsend", "igdone", "igdoneall", "igundo", "iglist"}
 
 SAFE_SUGGEST = {"menu", "status", "youtube", "instagram", "more", "help", "cancel", "start"}
 AUTO = HERE / "auto.json"; kick = threading.Event()
@@ -457,6 +537,8 @@ def handle(text):
         if not p or time.time() > p[0]: send("Koi pending kaam nahi (ya time khatam ho gaya). Menu se dobara chuno.", [b_menu()])
         else: run(p[1], p[2])
     elif cmd == "w2get": get_week2()
+    elif cmd == "w7get": get_week("7")
+    elif cmd == "friday": bridge_pairing()
     elif cmd == "yt2now":
         ask(["yt_publish.py", Q2, "--now"] + (["--per-channel", arg] if arg.isdigit() else []), "YouTube Week 2 TURANT PUBLIC",
             "⚠ Week 2: " + (f"har channel ke agle {arg} video" if arg.isdigit() else "saare baaki video") + " abhi PUBLIC ho jayenge (schedule nahi).")
@@ -517,6 +599,8 @@ def main():
     threading.Thread(target=autopilot, daemon=True).start()
     threading.Thread(target=outbox_loop, daemon=True).start()
     threading.Thread(target=watch_new_videos, daemon=True).start()
+    threading.Thread(target=bridge_loop, daemon=True).start()
+    threading.Thread(target=stats_loop, daemon=True).start()
     log("studio bot chalu"); OFF = HERE / "tg_offset.txt"
     try: offset = int(OFF.read_text().strip())      # last handled update, so /update (which exits) is never replayed
     except Exception: offset = None
